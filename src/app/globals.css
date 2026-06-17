@@ -100,3 +100,15 @@ body {
     animation: none;
   }
 }
+
+/* Section 05 — process: gentle "magnetic" settle on each scroll step.
+   Proximity (not mandatory) so the user is never trapped; only this section
+   carries snap-align targets, so the rest of the page scrolls untouched. */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-snap-type: y proximity;
+  }
+  .process-snap {
+    scroll-snap-align: center;
+  }
+}

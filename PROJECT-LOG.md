@@ -5,6 +5,99 @@ The homepage is composed of 12 sections (`src/components/sections/`), built one 
 
 ---
 
+## 05 — Process · 2026-06-17
+
+Built the process section (section 05) from the Figma desktop node `6769-16465`, the collapsed
+mobile node `6686-40959` and the expanded mobile node `6708-15463`. Headline
+**"Ordnen. Teilen. Entlasten."** introducing the three companion modes — **Wallet** (green owl),
+**Wally** (olive owl) and **Angel** (blue owl) — where Angel holds two cards (*Vorbereiten* +
+*Fürsorge für die Liebsten*) split by a divider.
+
+### Two completely different layouts (`src/components/sections/ProcessSection.tsx`, client)
+
+The desktop and mobile designs are unrelated, so the component renders one or the other
+(`lg:hidden` / `hidden lg:block`), not a single responsive tree.
+
+- **Mobile (`<lg`)** — an **accordion**. Header (label + heading + chevron) per card; tapping
+  reveals body + tag pills. Each owl sits **centered above** its rounded `bg-box` card. Angel's
+  box stacks two independently-collapsible cards with a hairline divider. Toggles are independent
+  (a `Set` of `${stepId}-${cardIndex}` keys, multiple open at once); **Wallet opens by default**.
+  Panels expand with the CSS **`grid-template-rows: 0fr → 1fr`** trick (clips cleanly, animates
+  height, no JS measuring), the chevron rotates 180°.
+- **Desktop (`lg`+)** — the **scroll-pinned stage** described below.
+
+### The desktop animation — sticky left, one box at a time (per request)
+
+The brief: *left side stays sticky; right side scrolls through with a magnetic lock-in per box;
+only one box is visible at a time; the next box flies in from the bottom.* Built with **no
+animation library** — a tall scroll track + `position: sticky` + a rAF-throttled scroll listener,
+in keeping with the site's JS-light convention.
+
+- The section is **`300vh` tall** (`STEPS.length * 100vh`). A **`sticky top-0 h-screen`** wrapper
+  pins the entire two-column layout for the duration; the **left column is static** within it
+  (confirmed with the user — the headline does not change per step).
+- A scroll listener computes progress through the track
+  (`-track.top / (trackHeight - innerHeight)`) → an `active` index `floor(p * 3)`. The three boxes
+  are **absolutely stacked and centred**; the active one rests at `translate-y-0 opacity-100`, the
+  **next waits at `translate-y-[340px] opacity-0`** (below) and the passed one **lifts to
+  `-translate-y-[340px]`** (above) — so a card visibly **flies bottom → middle → top** through the
+  stage, not just a fade. Eased with a symmetric `cubic-bezier(0.65,0,0.35,1)` (easeInOutCubic) over
+  600ms so both the entrance from below *and* the exit upward read as motion. Each step's **owl is
+  centred above its box** and flies with it.
+
+  > **Tailwind v4 gotcha (this is why the first cut "only faded in"):** v4 routes `translate-y-*`
+  > through the standalone **`translate`** CSS property, *not* `transform`. So
+  > `transition-[transform,opacity]` left the position **un-transitioned** — it snapped instantly
+  > while only opacity animated. Fix: **`transition-[translate,opacity]`**. (The chevron's
+  > `transition-transform` utility is fine — in v4 that utility already covers `translate/scale/
+  > rotate`; the trap is only the *arbitrary* `transition-[…]` form, where you must name `translate`
+  > explicitly.)
+- **Magnetic settle = gentle, not scroll-jacking** (user picked "Soft"). One full-height
+  `.process-snap` marker per step + **`scroll-snap-type: y proximity`** on `html`, scoped via a
+  `min-width:1024px` + `prefers-reduced-motion: no-preference` media query in `globals.css`.
+  Proximity (not `mandatory`) means the page only nudges toward a step when you stop near one —
+  the user is never trapped. Only this section carries snap-align targets, so the rest of the page
+  scrolls untouched. The marker centers are arithmetically aligned to the `active`-index thresholds
+  (settle points land at exactly one clean step each).
+- A **progress rail** of subtle numbers **1 · 2 · 3** sits left of the stage; the active number is
+  highlighted **in that step's owl colour** and scaled `1.25×`, the inactive ones greyed
+  (`#c4c4c4`). The three accents are the owl body colours (sampled, == brand tokens): Wallet
+  **`#a0bead`**, Wally **`#d2d58b`**, Angel **`#b6c4db`** (stored as `accent` on each step). Each
+  number is **clickable to jump** to its step (`scrollTo` to `trackOffsetTop + (i/steps) * dist`,
+  smooth).
+- A **timeline spine** runs vertically **behind** the cards, centred on the box column (the owls
+  sit on it like stations). It's a 1px light-grey line (`#d4d4d4`) painted via a top-to-bottom
+  gradient (`transparent → grey 18%…82% → transparent`) so both ends **fade out** softly; the
+  opaque card covers its middle. Added to the static fallback too (`inset-y-0` down the centred
+  column). Mobile keeps no spine — it's an accordion, not a timeline.
+
+### Reduced motion
+
+`prefers-reduced-motion: reduce` swaps the desktop to **`DesktopStatic`** — the plain Figma stack
+(left column `sticky top-28`, all three owl+box rows in normal flow, no pinning, no transforms).
+Detected via `matchMedia` in an effect (initial client render assumes motion-on, then corrects).
+The proximity snap is also gated off by the same media query. Mobile is unaffected.
+
+### Assets
+
+In `public/assets/home/05-process/`:
+- `owl-wallet.png`, `owl-wally.png`, `owl-angel.png` — the three timeline owls. Exported from the
+  Figma owl nodes (`6769-16468/69/70`) as **PNG at 4× scale** (~300px, transparent RGBA). The owls
+  render in Figma as **dozens of grain-filtered fragments + raster image fills** (the eyes/ears are
+  image fills), so a clean vector export was impractical — same call as the hero's `hero-screens.png`
+  and section 03's illustration. At 4× they're crisp at the ~52–72px display sizes.
+- The **label owl reuses the hero's `/Me.svg?v=2`** (the olive Wally) — no new asset.
+
+### Notes
+
+- Content colours match section 03/04: `#1a2d28` for headings (`/90` label, `/70` body), tag pills
+  `bg-white rounded-[20px]`, boxes on the **`bg-box` token** (`#f1ede8`). Type follows the site's
+  Open Sans standard (Figma's Poppins/Inter ignored, per the 01 decision). The **"Ordnen. Teilen.
+  Entlasten." headline uses `font-bold`** (700, not the section-default semibold) to match the
+  heavier weight in the Figma — applied on both breakpoints.
+- The dev server convention: `.claude/launch.json` gained **`"autoPort": true`** so the preview
+  tool can manage the server without clashing with a hand-started `next dev`.
+
 ## 03 — The problem · 2026-06-11
 
 Built the problem section (section 03) from the Figma desktop node `6532-16832` and mobile node
