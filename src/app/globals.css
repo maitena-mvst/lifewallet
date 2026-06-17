@@ -1,26 +1,79 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+
+  /* Brand palette (from Figma variables) */
+  --color-forest: #1b312b;
+  --color-forest-700: #305548;
+  --color-forest-100: #d2e8e1;
+  --color-cream: #fdfcfb;
+  --color-box: #f1ede8;
+  --color-divider: #ddd5cb;
+
+  --color-lime-900: #2c2d1c;
+  --color-lime-700: #4f5125;
+  --color-lime-300: #d2d58b;
+  --color-lime-200: #d2d58b;
+  --color-olive-200: #a0bead;
+
+  --color-blue-300: #b6c4db;
+
+  /* Hero background gradient stops */
+  --hero-from: #f1f2d3;
+  --hero-to: #e5e7b0;
+
+  --radius-input: 6px;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: var(--color-cream);
+  --foreground: var(--color-forest);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html {
+  scroll-behavior: smooth;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+}
+
+/* The hero gradient, used by the hero section background */
+.hero-gradient {
+  background-image: linear-gradient(
+    112.86deg,
+    var(--hero-from) 28.6%,
+    var(--hero-to) 72.29%
+  );
+}
+
+/* Notification badge: fade in + move up */
+@keyframes badge-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-badge-rise {
+  animation: badge-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-badge-rise {
+    animation: none;
+  }
 }
