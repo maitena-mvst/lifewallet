@@ -101,6 +101,30 @@ body {
   }
 }
 
+/* Section 09 — security: while hovering the vault, the owl glides to the
+   centre and (once it lands) gets agitated — a slow angry sway around its feet.
+   transform/rotate here is independent of the wrapper's translate/scale
+   properties, so the move and the sway compose without fighting. */
+@keyframes owlAnger {
+  0%,
+  100% {
+    transform: rotate(-3.5deg);
+  }
+  50% {
+    transform: rotate(3.5deg);
+  }
+}
+
+.security-vault:hover .security-owl-angry {
+  animation: owlAnger 0.65s ease-in-out 0.4s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .security-vault:hover .security-owl-angry {
+    animation: none;
+  }
+}
+
 /* Section 05 — process: gentle "magnetic" settle on each scroll step.
    Proximity (not mandatory) so the user is never trapped; only this section
    carries snap-align targets, so the rest of the page scrolls untouched. */

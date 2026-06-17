@@ -5,6 +5,108 @@ The homepage is composed of 12 sections (`src/components/sections/`), built one 
 
 ---
 
+## 09 — Security · 2026-06-17
+
+Built the security section (section 09) from the Figma desktop node `6545-15369` and mobile node
+`6655-37555`. Headline **"Deine Daten verdienen höchstes Vertrauen"** with four trust signals —
+*Ende-zu-Ende verschlüsselt*, *Server in Deutschland*, *Zero-Knowledge-Architektur*, *BSI-Standard*
+(the same four concepts as the section 02 trust banner, but here as full cards with their own icons).
+
+### One responsive layout, no JS (`src/components/sections/SecuritySection.tsx`, server component)
+
+Like section 08, this is a single server component — the only motion is **native CSS** (the mobile
+carousel = scroll-snap; the desktop hover = `group-hover`), so no client component is needed.
+
+- **Top area** — header (left, `lg:w-[542px]`) + the black vault (right, **desktop only** — the
+  mobile node omits it; `hidden lg:flex`). Header is the site-standard label owl (`/Me.svg?v=2`) +
+  `18px` label, `24→30px` semibold headline, `14→16px` sub.
+- **Cards** — a **horizontal snap-carousel on mobile**, a **4-up grid on desktop** (`lg:grid
+  lg:grid-cols-4 lg:gap-6`). Same pattern/markup as section 08: `-mx-5 px-5` bleed + `scroll-pl-5`,
+  scrollbar hidden, each card `w-[305px] shrink-0 snap-start`. Cards are `bg-box` (`#f1ede8`)
+  `rounded-2xl`, centred. **Type differs by breakpoint per the Figma**: title `18px medium` mobile →
+  `16px medium` desktop; body `14px` mobile → `16px` desktop (both `#1a2d28/70`). Verified at 393:
+  carousel `scrollWidth` 1308; at 1440: grid is four equal `322px` columns.
+
+### The vault — rebuilt as divs + a PNG dial
+
+The black safe (Figma node `6545:15370`) is **solid shapes**, so it's rebuilt from divs rather than
+rastered: a `#2b2b2b` body (`rounded-[13px]`), two left hinge bars, and three `#3b3b3b` pill
+"shelves", all absolutely placed at the Figma coordinates inside a `relative w-[381px] h-[296px]`
+box. Only the **combination dial** (`Component 3`, a grain-filtered raster in Figma) is exported as a
+transparent PNG (`vault-dial.png`, 4×/576²) and centred on the body.
+
+### The desktop hover animation — owl guards the vault (per request)
+
+The vault box is a **`group`**. At rest the calm owl **peeks at the right edge, vertically centred on
+the vault** (`left-[283px] top-[99px]`). On `group-hover` the owl **glides horizontally to the centre
+of the vault face — same height, no vertical jump — and gets angry** — built with pure CSS, no JS:
+
+- The owl wrapper translates **horizontally only** to the vault centre and scales up a touch:
+  `group-hover:-translate-x-[142px] group-hover:scale-[1.15]` (no `-translate-y`, per a design tweak
+  — the owl stays on the vault's vertical centre line throughout). The x-offset is arithmetic — rest
+  owl-centre `x≈1153` → vault-centre `x≈1011` at 1440 (verified by DOM measurement). Scaling around
+  the box centre keeps it centred.
+- The calm (`owl-calm.png`) and angry (`owl-guard.png`) owls are **stacked and cross-faded**
+  (`opacity` 100↔0 on hover). CSS can't swap an `<img src>`, and the two are *different raster poses*
+  (arms-down vs. arms-crossed), so they can't be morphed — two images is the clean way. To make the
+  change read as a *reaction* rather than a hard swap, the angry owl then **sways** once it lands: an
+  `owlAnger` keyframe (`globals.css`) rotates it `±3.5°` around its feet (`origin-bottom`), `0.65s`
+  ease-in-out, with a `0.4s` delay so it kicks in just as the glide finishes. Scoped to
+  `.security-vault:hover .security-owl-angry` and gated off under `prefers-reduced-motion`.
+- **Tailwind v4 gotcha (same as section 05):** v4 routes `translate`/`scale` through their own CSS
+  properties, so the transition names them explicitly — `transition-[translate,scale]`, not
+  `transition-transform`. (Bonus: the sway animates `transform: rotate()`, a *separate* property from
+  `translate`/`scale`, so the move and the sway compose without fighting.)
+  `motion-reduce:transition-none` snaps instead of animating for reduced motion. Tailwind wraps
+  `group-hover` in `@media (hover: hover)`, so this only fires on real-pointer devices (desktop) —
+  touch never triggers it, and mobile has no vault anyway.
+
+### Assets — `public/assets/home/09-security/`
+
+- `owl-calm.png` (the calm peeking owl, node `6545-15433`) and `owl-guard.png` (the crossed-wing
+  guarding pose, node `6855-15521`) — 4× PNGs (~395×411), same call as the section 05/08 owls (the
+  owls render as dozens of grain-filtered fragments in Figma).
+- `dial.png` — the combination dial (see above).
+
+> **Backgrounds knocked out (Figma export baked them in):** unlike the 05/08 owl exports, the Figma
+> MCP `download_assets` PNGs here came back **fully opaque** — white behind the dial + calm owl, the
+> `#444` canvas grey behind the angry owl (0 transparent pixels; the dial's white square was glaring
+> on the dark vault). Fixed in post with a small Python/PIL pass: **flood-fill the background colour
+> inward from the four edges** (connectivity-based, so the owls' enclosed *white eyes* are preserved —
+> a global colour-key would have erased them), then a 2-px alpha erosion to kill the anti-alias halo.
+> At 4× source the erosion is sub-pixel after downscale. Verified the served files have
+> `cornerAlpha 0` / `centerAlpha 255`. **Filenames are post-knockout** (`dial.png`, `owl-calm.png`,
+> `owl-guard.png`) — see the cache note below for why they were renamed from the originals.
+- `icon-encryption.svg` (padlock), `icon-server.svg` (shield + check), `icon-zero-knowledge.svg`
+  (branching nodes), `icon-bsi.svg` (badge) — the four card icons. **Normalised like the trust-banner
+  icons**: the raw Figma SVG exports came wrapped in the whole-frame context (page background, the
+  `bg-box` card rect, etc.) with `black` accent fills; extracted just the glyph paths into clean
+  `0 0 24/26` viewBoxes and recoloured every fill to `#1a2d28` (accents at `opacity 0.2`).
+
+### Notes
+
+- **One deliberate deviation:** the mobile node orders the cards Ende-zu-Ende / Server / **BSI /
+  Zero-Knowledge**; a single `SIGNALS` array drives both breakpoints in the more logical Ende /
+  Server / Zero-Knowledge / BSI order (matching the desktop node and the trust banner).
+- Gutters/colours follow the site convention (`max-w-[1440px] px-5 lg:px-10`, `bg-box`, `#1a2d28`),
+  not the Figma node's 80px gutters — aligned with sections 03/05/08.
+- As with section 08, **desktop full-page screenshots come back blank / pinned to the hero** (section
+  05's sticky 300vh track corrupts the headless capture), so the desktop layout + hover were verified
+  by DOM measurement, pixel-probing the served PNGs via canvas, and reading the compiled CSS; mobile
+  screenshots work fine.
+- **The transparency fix took three tries — a `next/image` caching tale:** after knocking out the
+  baked backgrounds, the white versions *kept showing*. (1) Cache-busting the same filenames with
+  `?v=2` **threw a runtime error** — Next 16 now requires query strings on local images to be
+  allow-listed in `images.localPatterns` (SVGs like `/Me.svg?v=2` slip through because they bypass
+  the optimizer; raster does not). (2) Dropping the query + clearing `.next/cache/images` fixed the
+  *server* (a forced re-fetch returned a transparent PNG, `x-nextjs-cache: MISS`) but the **browser**
+  still served the stale white WebP — `next/image` responses carry long-lived immutable cache
+  headers, and the URL was unchanged. (3) The fix that sticks: **rename the files** (`vault-dial`→
+  `dial`, `owl-normal`→`owl-calm`, `owl-angry`→`owl-guard`) so the `url=` param — and thus the cache
+  key — changes, forcing a fresh fetch for every client. In production this never arises (the files
+  ship transparent from the first deploy); it was purely a dev-session artifact of editing image
+  bytes in place under an aggressive cache.
+
 ## 08 — For who · 2026-06-17
 
 Built the "for who" section (section 08) from the Figma desktop node `6518-14680` and mobile node
