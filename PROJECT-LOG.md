@@ -5,6 +5,60 @@ The homepage is composed of 12 sections (`src/components/sections/`), built one 
 
 ---
 
+## 08 — For who · 2026-06-17
+
+Built the "for who" section (section 08) from the Figma desktop node `6518-14680` and mobile node
+`6655-36888`. Headline **"Für alle, die Fürsorge zeigen"** with four audience cards — *Einzelpersonen*,
+*Paare*, *Familien & Alleinerziehende*, *ältere Menschen & Angehörige* — each topped by an owl scene.
+
+### One responsive layout, no JS (`src/components/sections/ForWhoSection.tsx`, server component)
+
+A single markup that is a **horizontal snap-carousel on mobile** and a **2×2 grid on desktop**, driven
+by responsive classes — no client component, since the only motion (the mobile carousel) is **native
+CSS scroll-snap**, not JS. The "no animations apart from a mobile carousel scroll" brief is met with
+zero JavaScript.
+
+- **Mobile (`<lg`)** — `flex … overflow-x-auto snap-x snap-mandatory`, each card `w-[305px] shrink-0
+  snap-start`. A **`-mx-5 px-5` bleed** lets the row scroll edge-to-edge while the first/last card keep
+  the section gutter (so the next card *peeks*); `scroll-pl-5` aligns snap to that gutter. Scrollbar
+  hidden (`[scrollbar-width:none]` + `[&::-webkit-scrollbar]:hidden`). Verified: row `scrollWidth`
+  1308 over a 375 viewport, snaps cleanly through all four cards.
+- **Desktop (`lg`+)** — the same container flips to `lg:grid lg:grid-cols-2 lg:gap-6` (and drops the
+  bleed/overflow). Verified at 1440: two **668px** columns, four cards in a 2×2 (`x40/x732`,
+  `y360/y664`), all equal height (grid/flex stretch — no fixed heights needed), left edge `40px` /
+  right edge `40px` from the viewport.
+
+### Card content & typography
+
+A single `AUDIENCES` array drives both layouts. Cards are `bg-white rounded-2xl`, centred, illustration
+in a fixed-height box on top, then title + body. **Title size differs by breakpoint per the Figma**:
+mobile **18px medium** (`text-lg font-medium`), desktop **24px semibold** (`lg:text-2xl
+lg:font-semibold`). Body is `14px` `#1a2d28/70`. Header matches sections 03/05: `Me.svg` label owl +
+`18px` label, `24→30px` semibold headline, `14→16px` sub. Gutters/colours follow the site convention
+(`max-w-[1440px] px-5 lg:px-10`, `bg-box`, `#1a2d28`), not the Figma node's 80px gutters — kept aligned
+with sections 03/04/05.
+
+### Assets — four owl scenes as 4× PNGs (same call as 03/05)
+
+In `public/assets/home/08-for-who/`: `owl-single.png` (Einzelpersonen, olive owl), `owls-couple.png`
+(blue + olive), `owls-family.png` (a family of four owls), `owls-elderly.png` (olive owl + bespectacled
+owl with a cane). The owls render in Figma as **dozens of grain-filtered fragments + raster image fills**
+(same as the section 05 owls), so a clean vector export was impractical — exported each card's scene
+group as a **transparent PNG at 4× scale** (~276px tall) via the Figma asset export. Displayed at
+`h-[68px]` (mobile) / `lg:h-[76px]`; since all four PNGs share the same 4× crop height, the owls read at
+a consistent scale across cards. Displayed with `next/image` (intrinsic 315/545/785/709 × 276).
+
+### Notes
+
+- **Two deviations from the desktop node, both deliberate:** (1) the desktop *Einzelpersonen* owl holds
+  a small letter in the Figma; the **mobile node drops it**, so the plain owl is used on both breakpoints
+  for consistency. (2) The label owl is **kept on mobile** (the mobile node omits it) to match the
+  established section 03/05 label treatment.
+- Verifying this section by **screenshot at desktop width is unreliable** — section 05's sticky 300vh
+  process track + its scroll machinery corrupt the headless full-page capture (comes back blank). DOM
+  measurement (`getBoundingClientRect` + `getComputedStyle`) is the reliable check here; mobile
+  screenshots work fine.
+
 ## 05 — Process · 2026-06-17
 
 Built the process section (section 05) from the Figma desktop node `6769-16465`, the collapsed
