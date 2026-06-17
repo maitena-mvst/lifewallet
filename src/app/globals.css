@@ -77,3 +77,26 @@ body {
     animation: none;
   }
 }
+
+/* Section 04 — pillar cards sequential entrance */
+@keyframes pillarFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+[data-visible="true"] .pillar-card {
+  animation: pillarFadeIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-visible="true"] .pillar-card {
+    animation: none;
+  }
+}
