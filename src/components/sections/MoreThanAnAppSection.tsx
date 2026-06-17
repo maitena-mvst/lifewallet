@@ -33,10 +33,10 @@ const PILLARS = [
 function PillarIcon({ type }: { type: string }) {
   if (type === "bars") {
     return (
-      <span className="flex shrink-0 flex-col gap-[9px] pt-0.5" aria-hidden>
-        <span className="h-[9px] w-[28px] rounded-full bg-[#a0bead]" />
-        <span className="h-[9px] w-[28px] rounded-full bg-[#a0bead]" />
-        <span className="h-[9px] w-[28px] rounded-full bg-[#a0bead]" />
+      <span className="flex shrink-0 flex-col pt-0.5" aria-hidden>
+        <span className="h-[9px] w-[28px] rounded-[16px] bg-[#a0bead]" />
+        <span className="h-[9px] w-[28px] rounded-[16px] bg-[#a0bead]" />
+        <span className="h-[9px] w-[28px] rounded-[16px] bg-[#a0bead]" />
       </span>
     )
   }
@@ -112,7 +112,7 @@ export default function MoreThanAnAppSection() {
           <div className="flex flex-col gap-8 p-6 lg:hidden">
             {/* Header */}
             <div className="flex flex-col gap-4 text-center">
-              <h2 className="text-[24px] font-semibold leading-[32px] text-[#2c2d1c]">
+              <h2 className="text-[24px] font-bold leading-[32px] text-[#2c2d1c]">
                 Mehr als eine App. Dein vertrauensvoller Begleiter.
               </h2>
               <p className="text-sm leading-5 text-[#4f5125]">
@@ -145,7 +145,7 @@ export default function MoreThanAnAppSection() {
           <div className="relative hidden h-[505px] lg:block">
             {/* Header — centered, 38 px from card top */}
             <div className="absolute left-1/2 top-[38px] w-[980px] -translate-x-1/2 text-center">
-              <h2 className="text-[30px] font-semibold leading-9 text-[#1a2d28]">
+              <h2 className="text-[30px] font-bold leading-9 text-[#1a2d28]">
                 Mehr als eine App. Dein vertrauensvoller Begleiter.
               </h2>
               <p className="mt-3 text-sm leading-5 text-[#1a2d28]/70">
