@@ -14,8 +14,12 @@ import FooterSection from "@/components/sections/FooterSection"
 export default function Home() {
   return (
     <main>
-      <HeroSection />
-      <TrustBannerSection />
+      {/* Hero + trust banner share one continuous gradient so the green flows
+          seamlessly into the banner (section 03's grey overlaps the lower half). */}
+      <div className="hero-gradient">
+        <HeroSection />
+        <TrustBannerSection />
+      </div>
       <TheProblemSection />
       <MoreThanAnAppSection />
       <ProcessSection />

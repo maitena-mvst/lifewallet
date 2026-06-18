@@ -43,13 +43,13 @@ function HeroText() {
 
 export default function HeroSection() {
   return (
-    <section id="01-hero" className="hero-gradient relative overflow-hidden lg:min-h-screen">
+    <section id="01-hero" className="relative overflow-hidden lg:min-h-screen">
       <Navbar />
 
       {/* Mobile / tablet: stacked flow */}
       <div className="mx-auto flex max-w-[1440px] flex-col items-center gap-8 px-5 pt-[110px] pb-12 lg:hidden">
         <HeroText />
-        <div className="flex w-full justify-center">
+        <div className="mt-6 flex w-full justify-center">
           <PhoneShowcase />
         </div>
       </div>

@@ -5,6 +5,83 @@ The homepage is composed of 12 sections (`src/components/sections/`), built one 
 
 ---
 
+## 06 — Features · 2026-06-18
+
+Built the features section (section 06) from the Figma desktop node `6548-15390` and mobile node
+`6608-28881`. Headline **"lifewallet ist mehr als ein digitaler Ordner"** with five feature
+illustrations: *KI, die mitdenkt und Dich erinnert*, *Teilen mit Vertrauen*, *Ihre Brieftasche –
+alles griffbereit*, *Planung, die einfach erscheint*, and the Wallet app screen.
+
+### Two layouts (`src/components/sections/FeaturesSection.tsx`, server component)
+
+A single server component, no JS. Mobile and desktop diverge completely:
+
+- **Mobile (`<lg`)** — a **horizontal snap-carousel** (same `-mx-5 px-5 bleed + snap-x pattern`
+  as sections 08/09). Four `w-[305px] h-[640px] shrink-0 snap-start` cards:
+  1. **KI card** (lime gradient): uses `mob-card-ki.png` (full Figma mobile card screenshot,
+     333×803, displayed with `object-cover object-top`). The Figma mobile design stacks the Wally
+     owl + "KI, die mitdenkt" heading + wallet app screenshot all in one tall card.
+  2. **Teilen card** (bg-box, CSS): `illus-teilen.png` illustration (sharing circle with four
+     people avatars + blue owl + floating docs) + HTML heading at bottom.
+  3. **Brieftasche card** (bg-box, CSS): `illus-brieftasche.png` (Wally owl peeking over a
+     search bar "Frag mich nach Autoversicherung") + HTML heading.
+  4. **Wallet card** (bg-box, CSS): `illus-wallet.png` (iPhone wallet list screen) + HTML heading
+     "Deine Wallet – alles griffbereit".
+  Verified at 390px: 4 cards × 305×640, scrollWidth 1308.
+
+- **Desktop (`lg`+)** — a **3-column bento grid** (`flex gap-5 items-start`):
+  - Col 1 (`flex-1`): KI card (h-265, lime gradient) + Teilen card (h-265, bg-box) — stacked
+    with `gap-5`.
+  - Col 2 (`flex-1`): Brieftasche card (h-265, bg-box) + Planung card (h-265, bg-box) — stacked.
+  - Col 3 (`w-[270px] shrink-0`): Wallet screen card (h-550, bg-box) — tall narrow column.
+  All cards use `next/image` with `fill + object-cover` inside `relative overflow-hidden
+  rounded-2xl` containers. Verified at 1440px: 4 flex-1 cards at 525×265, wallet card at
+  270×550, all 10 images loaded with zero errors.
+
+### Asset strategy — full card screenshots for desktop, mixed for mobile
+
+Desktop screenshot tool returns card nodes at their native 1× canvas size. Rather than building
+the card illustrations from scratch (the owls + sharing circles + chat UI are complex multi-layer
+Figma compositions), the full card screenshots were used:
+- `card-ki.png` (485×265) — KI card with lime gradient + Wally owl + heading
+- `card-teilen.png` (485×265) — sharing circle with people avatars + heading
+- `card-brieftasche.png` (485×265) — Wally owl + "Frag mich nach" chat UI + heading
+- `card-planung.png` (485×265) — Angel owl + shield + floating documents + heading
+- `card-wallet.png` (270×550) — iPhone-style wallet app screen
+
+For mobile, the KI card screenshot (`mob-card-ki.png`, 333×803) was taken from the mobile Figma
+node directly. Mobile cards 2–4 were built as CSS cards with illustration-only images
+(`illus-teilen.png`, `illus-brieftasche.png`, `illus-wallet.png`) since the mobile Figma carousel
+nodes for those cards couldn't be screenshotted (they render as 1×1px — positioned in an
+overflow-hidden scroll track that clips them in the headless renderer).
+
+### Assets — `public/assets/home/06-features/`
+
+- `card-ki.png`, `card-teilen.png`, `card-brieftasche.png`, `card-planung.png`, `card-wallet.png`
+  — full desktop card screenshots (485×265 except wallet at 270×550). Used as `next/image fill`
+  in fixed-height containers on desktop.
+- `mob-card-ki.png` (333×803) — full mobile KI card screenshot (owl + heading + wallet screen).
+- `illus-ki.png` (225×249), `illus-teilen.png` (295×242), `illus-brieftasche.png` (428×179),
+  `illus-planung.png` (453×102), `illus-wallet.png` (218×474) — illustration sub-nodes extracted
+  from Figma cards. Used in mobile CSS cards (2–4). All have opaque backgrounds (Figma compositor
+  bakes the card background into illustration-node screenshots).
+
+### Notes
+
+- **Desktop screenshot verification is unreliable** at this scroll depth (section 05's sticky
+  300vh track corrupts headless full-page captures, same as sections 08/09/10). Desktop verified
+  via DOM measurement: `getBoundingClientRect` confirmed card dimensions (525×265 for flex-1
+  cards, 270×550 for wallet card).
+- **Card image text** is baked into the card screenshots. This is acceptable since the images
+  are purely visual; `alt` text provides accessible equivalents for screen readers.
+- Heading typography matches site convention: `text-[24px] font-semibold` (mobile) →
+  `text-[30px] font-semibold` (desktop), `text-[#1a2d28]`. Label with `Me.svg?v=2` owl
+  matches sections 03/05/08/09/10.
+- `bg-white` section background (not `bg-box`) — the feature cards themselves carry the
+  lime/beige backgrounds; the section wrapper stays white to contrast with adjacent sections.
+
+---
+
 ## 11 — Footer · 2026-06-17
 
 Built the footer (section 11) from the Figma desktop node `6518-16354` and mobile node
