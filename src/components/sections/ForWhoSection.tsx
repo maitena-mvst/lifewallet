@@ -47,7 +47,7 @@ export default function ForWhoSection() {
           <p className="text-base font-medium text-[#1a2d28]/90 lg:text-lg">Für wen lifewallet da ist</p>
         </div>
 
-        <h2 className="mt-4 text-[24px] font-semibold leading-8 text-[#1a2d28] lg:text-[30px] lg:leading-9">
+        <h2 className="mt-4 text-[24px] font-bold leading-8 text-[#1a2d28] lg:text-[30px] lg:leading-9">
           Für alle, die Fürsorge zeigen
         </h2>
 

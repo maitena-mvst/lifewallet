@@ -1,7 +1,12 @@
+import fs from "node:fs"
+import path from "node:path"
 import Image from "next/image"
 
 const LABEL_ICON = "/Me.svg?v=2"
-const ILLUSTRATION = "/assets/home/03-the-problem/problem-illustration.svg?v=4"
+
+// The illustration is inlined (not <img>) so its <text> labels render in the
+// site's Open Sans — web fonts don't load inside an <img>-embedded SVG.
+const ILLUSTRATION_PATH = "public/assets/home/03-the-problem/problem-illustration.svg"
 
 const PROBLEMS = [
   {
@@ -27,9 +32,20 @@ const PROBLEMS = [
 ]
 
 export default function TheProblemSection() {
+  const illustration = fs
+    .readFileSync(path.join(process.cwd(), ILLUSTRATION_PATH), "utf8")
+    .replace(
+      '<svg width="742" height="478" viewBox="0 0 742 478" fill="none" xmlns="http://www.w3.org/2000/svg">',
+      '<svg viewBox="0 0 742 478" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wally sortiert Deine verstreuten Dokumente" class="block h-auto w-full">',
+    )
+
+  // On mobile the beige (bg-box) is pulled up 200px so it extends behind the
+  // lower half of the trust-banner card (up to its vertical middle); the
+  // compensating pt-[256px] (200 + the base 56) keeps the content in place.
+  // The trust card is z-20-positioned, so it paints on top of the beige.
   return (
-    <section id="03-the-problem" className="bg-box">
-      <div className="mx-auto max-w-[1440px] px-5 py-14 lg:px-10 lg:py-20">
+    <section id="03-the-problem" className="-mt-[200px] bg-box lg:mt-0">
+      <div className="mx-auto max-w-[1440px] px-5 pt-[256px] pb-14 lg:px-10 lg:py-20">
         <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-8">
           {/* Left: label, headline, problem cards */}
           <div className="lg:w-[536px] lg:shrink-0">
@@ -38,7 +54,7 @@ export default function TheProblemSection() {
               <p className="text-base font-medium text-[#1a2d28]/90 lg:text-lg">Das Problem</p>
             </div>
 
-            <h2 className="mt-4 max-w-[383px] text-[24px] font-semibold leading-[30px] text-[#1a2d28] lg:text-[30px] lg:leading-9">
+            <h2 className="mt-4 max-w-[383px] text-[24px] font-bold leading-[30px] text-[#1a2d28] lg:text-[30px] lg:leading-9">
               Wann hast Du zuletzt den Kopf frei gehabt?
             </h2>
 
@@ -63,13 +79,9 @@ export default function TheProblemSection() {
           {/* Right: Wally on the paper pile — pinned 129px from the section top
               (80px lg:py-20 pad-top + 49px), per the Figma desktop position */}
           <div className="flex justify-center lg:mt-[49px] lg:flex-1 lg:justify-end">
-            <Image
-              src={ILLUSTRATION}
-              alt="Wally sitzt auf einem Berg aus verstreuten Dokumenten"
-              width={742}
-              height={478}
-              className="h-auto w-full max-w-[420px] lg:max-w-[700px]"
-              priority={false}
+            <div
+              className="w-full max-w-[420px] lg:max-w-[700px]"
+              dangerouslySetInnerHTML={{ __html: illustration }}
             />
           </div>
         </div>

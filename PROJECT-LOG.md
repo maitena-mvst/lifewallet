@@ -5,6 +5,87 @@ The homepage is composed of 12 sections (`src/components/sections/`), built one 
 
 ---
 
+## 11 — Footer · 2026-06-17
+
+Built the footer (section 11) from the Figma desktop node `6518-16354` and mobile node
+`6655-38702`. Hero-gradient background, logo + "Jetzt testen" CTA, hairline divider, legal
+links, and social icons (WeChat, LinkedIn, YouTube).
+
+### Layout (`src/components/sections/FooterSection.tsx`, server component)
+
+Single server component, no JS. One responsive markup:
+
+- **Mobile (`<lg`)** — column layout: logo, then CTA button, divider, then legal links row
+  (`gap-4`), then social icons row (`gap-5`, 49×49px icons, `rounded-[12px]`).
+- **Desktop (`lg`+)** — two rows: (1) logo + CTA in a `flex justify-between` row; (2) legal
+  links on the left (`gap-[60px]`) and social icons on the right (`gap-3`, 30×30px icons,
+  `rounded-[7.5px]`). Verified at 375px: footer 375×277, icons 49×49, gradient correct.
+
+### Assets
+
+In `public/assets/home/11-footer/`:
+- `icon-wechat.svg`, `icon-linkedin.svg`, `icon-youtube.svg` — the three social icons
+  (downloaded from Figma assets as SVG). Displayed in `bg-lime-300` rounded pill containers;
+  icon size 18px desktop / 30px mobile.
+
+### Notes
+
+- Uses the existing `.hero-gradient` utility class (same `#f1f2d3 → #e5e7b0` stops as the hero).
+  Figma specifies a slightly different angle (135.64° desktop / 103° mobile vs the hero's 112.86°)
+  — reused the shared class for consistency since the colour difference is imperceptible.
+- The `Button` component (`href="#11-form"`) links to the waiting-list form section.
+- Legal links and social hrefs are `#` placeholders — wire up real destinations later.
+- Screenshot verification is unreliable due to ProcessSection's sticky 300vh track corrupting
+  headless captures; DOM inspection used instead.
+
+---
+
+## 10 — Team · 2026-06-17
+
+Built the team section (section 10) from the Figma desktop node `6781-17689` and mobile node
+`6655-38075`. Headline **"Warum wir das gebaut haben"** with a founder quote and two portrait photos
+of **Dr. Nicole Grigat** (Fachanwältin) and **Dr. Martina Große Sundrup** (Fachärztin).
+
+### One responsive layout (`src/components/sections/TeamSection.tsx`, server component)
+
+A single flex layout — stacked on mobile, two-column `justify-between` with `items-center` on
+desktop — no JS needed.
+
+- **Mobile (`<lg`)** — `flex-col gap-8`: text block first (label + headline + quote + attribution),
+  then the two photo cards side by side in a `flex gap-2.5` row. Each card is `167×226px` with
+  `rounded-lg` corners and `overflow-hidden`.
+- **Desktop (`lg`+)** — `flex-row justify-between items-center`. Left column capped at
+  `max-w-[536px]` (matching sections 03/05/08). Right column is two photo cards at `268×351px`
+  with `gap-4` and `rounded-xl` corners. Verified at 1440: both photos render at exactly 268×351px
+  via DOM measurement.
+
+### Content & typography
+
+Matches the established site convention: `Me.svg?v=2` label owl + `text-base/lg font-medium` label,
+`text-[24px]/[30px] font-semibold` headline, `text-sm/base` body quote, `text-base/lg font-medium`
+attribution name. Colours: `#1a2d28` headings, `/90` label + attribution, `/70` body.
+
+### Assets — two founder portrait photos
+
+In `public/assets/home/10-team/`:
+- `founder-nicole.jpg` — Dr. Nicole Grigat (JPEG, 4010×4096). Displayed with `object-cover
+  object-top` to keep the face in frame.
+- `founder-martina.png` — Dr. Martina Große Sundrup (PNG, 508×664). The raw Figma asset is stored
+  **horizontally mirrored** (the Figma node applies `rotate-180 + scaleY(-1)` = net `scaleX(-1)`
+  to correct it). Applied **`[transform:scaleX(-1)]`** on the `<Image>` tag to render her correctly.
+
+### Notes
+
+- **Label owl kept on mobile** (the mobile node omits it) to match the established section
+  03/05/08 label treatment.
+- Desktop screenshot verification is unreliable at this scroll depth due to section 05's
+  sticky 300vh track. Verified via `getBoundingClientRect` + `offsetWidth/Height` DOM measurement
+  (268×351px photos confirmed). Mobile screenshot verified clean.
+- Gutters follow site convention (`max-w-[1440px] px-5 lg:px-10`) — the Figma desktop node uses
+  `px-[80px]` which we ignore in favour of the established 40px desktop gutter.
+
+---
+
 ## 09 — Security · 2026-06-17
 
 Built the security section (section 09) from the Figma desktop node `6545-15369` and mobile node
@@ -106,6 +187,8 @@ of the vault face — same height, no vertical jump — and gets angry** — bui
   key — changes, forcing a fresh fetch for every client. In production this never arises (the files
   ship transparent from the first deploy); it was purely a dev-session artifact of editing image
   bytes in place under an aggressive cache.
+
+---
 
 ## 08 — For who · 2026-06-17
 
@@ -279,6 +362,16 @@ A single `PROBLEMS` array drives the four cards (icon box `57px` `bg-[#f1f2d3]`,
 `14px` medium title + `14px` regular body). Cards are `bg-white rounded-[17px]` with a whisper-soft
 shadow so they lift off the `bg-box` (`#f1ede8`) section.
 
+**Mobile beige extends behind the trust card** (per request): the section is pulled up
+**`-mt-[200px] lg:mt-0`** so its `bg-box` beige reaches the **vertical middle of the floating
+trust-banner card** (measured at 390px: card middle y1140 = the new section top, `delta 0`). The
+content is held in place by a compensating **`pt-[256px]`** (the `200` pull-up + the base `56`
+top padding) on the inner div, with `pb-14`; at `lg` the `lg:py-20` overrides both back to `80px`.
+Because the trust card is `z-20`-positioned and the problem section is static, the card paints
+**on top of** the beige. Desktop is untouched (`margin-top:0`, padding `80/80`). *(Gotcha for next
+time: a `{/* … */}` JSX comment can't sit as a sibling before the root element inside `return ( … )`
+— it broke the build until moved to `//` lines.)*
+
 ### The illustration — designer SVG, grain stripped
 
 The right-side artwork (owl + paper pile + the two floating UI cards) was delivered as a single
@@ -335,9 +428,29 @@ At 90–100% the ring + pill fade out and everything resets (the offscreen jumps
 animation off, resting state = document at card, ring full, pill visible). The wand wave
 (`wandWave 3s`) runs on its own independent period.
 
-The illustration `src` is bumped on each SVG edit to bust caches (same convention as the hero's
-`Logo.svg`/`Me.svg`) — currently **`?v=4`** (`v2` = wand animation, `v3` = slower wand + moved doc,
-`v4` = fly-in + progress-load + pill-pop sequence).
+### German UI copy → the SVG is now **inlined** (no longer `<img>`)
+
+The card labels were changed (per request): **"organize documents…" → "Wally sortiert für Dich"**
+and **"passport" → "Personalausweis"**. Both were *outlined to paths* in the source SVG, so the
+copy couldn't be edited as a string — and `<text>` with a web font won't render inside an
+`<img>`-embedded SVG (external fonts are blocked there). No font-subsetting tooling was available
+to re-outline the new German strings either.
+
+Fix: **the illustration is now inlined into the DOM** instead of loaded via `next/image`. The
+server component reads the file (`fs.readFileSync` on `public/.../problem-illustration.svg`) and
+injects it with `dangerouslySetInnerHTML`; the opening `<svg>` is rewritten to drop its fixed
+`width`/`height`, add `role="img"` + `aria-label`, and carry `class="block h-auto w-full"` (the
+`max-w-[420px] lg:max-w-[700px]` lives on the wrapper). The two outlined text runs were replaced
+with real `<text class="ui-text">` elements (`.ui-text{font-family:var(--font-sans)…}`), so they
+now render in the **site's Open Sans** — verified `getComputedStyle().fontFamily` resolves to
+`"Open Sans"`. *"Wally sortiert für Dich"* is centred under the ring (`text-anchor:middle x=627.5
+y=161`, 14.6px **`font-weight:600`** `#2c2d1c` — bumped from regular to semibold for a bit more
+weight, per request); *"Personalausweis"* is left-aligned in the pill (`x=488.6 y=201.5`, 11px
+semibold `#1b312b`).
+
+Inlining also means all the CSS animations above now live in the page (their `<style>` becomes
+global — class/keyframe names are unique enough not to clash) and the `?v=` cache-bust is **gone**
+(the file is read server-side, not fetched by the browser).
 
 ### Assets
 

@@ -51,7 +51,7 @@ export default function TrustBannerSection() {
           after it, so -mt-[71px] (the bar's 70px min-height + 1px border) pulls its
           bottom edge up onto the viewport bottom. The phones are bottom-anchored,
           so they reach down into the bar and it overlaps them at any height. */}
-      <div className="relative z-10 hidden border-b border-black/10 bg-lime-300 lg:-mt-[71px] lg:block">
+      <div className="relative z-10 hidden border-b border-black/10 bg-[linear-gradient(to_bottom,#e5e7b0_0%,#e5e7b0_50%,#d2d58b_100%)] lg:-mt-[71px] lg:block">
         <div className="mx-auto flex min-h-[70px] max-w-[1296px] items-center justify-between px-6 xl:px-0">
           {ITEMS.map((item) => (
             <div key={item.label} className="flex shrink-0 items-center gap-2.5">
