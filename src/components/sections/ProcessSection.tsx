@@ -238,13 +238,6 @@ function DesktopAnimated() {
       className="relative"
       style={{ height: `${STEPS.length * 100}vh` }}
     >
-      {/* Snap targets — one per step, for the gentle magnetic settle */}
-      <div className="pointer-events-none absolute inset-0 flex flex-col">
-        {STEPS.map((s) => (
-          <div key={s.id} className="process-snap h-screen w-px" />
-        ))}
-      </div>
-
       {/* Pinned stage */}
       <div className="sticky top-0 h-screen overflow-hidden">
         <div className="mx-auto flex h-full max-w-[1440px] items-center gap-10 px-10">

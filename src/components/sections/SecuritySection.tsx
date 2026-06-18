@@ -1,4 +1,7 @@
+"use client"
+
 import Image from "next/image"
+import { useRef, useState } from "react"
 
 const LABEL_ICON = "/Me.svg?v=2"
 const ASSETS = "/assets/home/09-security"
@@ -28,12 +31,37 @@ const SIGNALS = [
 
 /* The black vault, rebuilt from the Figma node as solid divs (body + three
    raised shelves + two left hinges) with the combination dial as a PNG. It's a
-   `group`: hovering anywhere on the vault glides the owl from its peek spot at
-   the bottom-right to the centre of the vault face and cross-fades it to the
-   angry/guarding pose — pure CSS, no JS. Desktop only. */
+   `group`: the owl rests at the bottom-right of the vault and, on hover, glides
+   along the bottom to the centre while cross-fading to the guarding pose. While
+   hovering, the owl is also minimally "magnetic" — it leans a few pixels toward
+   the cursor. Desktop only.
+
+   The big slide-to-centre lives on the outer wrapper (Tailwind `translate`, so
+   the transition names it explicitly — the section 05 gotcha). The magnetic
+   lean lives on an inner wrapper via inline `transform`, so the two compose on
+   separate elements instead of fighting over one property. */
+const MAGNET_PX = 10
+
 function Vault() {
+  const ref = useRef<HTMLDivElement>(null)
+  const [lean, setLean] = useState({ x: 0, y: 0 })
+
+  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = ref.current
+    if (!el) return
+    const r = el.getBoundingClientRect()
+    const dx = (e.clientX - (r.left + r.width / 2)) / (r.width / 2)
+    const dy = (e.clientY - (r.top + r.height / 2)) / (r.height / 2)
+    setLean({ x: dx * MAGNET_PX, y: dy * MAGNET_PX })
+  }
+
   return (
-    <div className="security-vault group relative h-[296px] w-[381px] shrink-0">
+    <div
+      ref={ref}
+      onMouseMove={handleMove}
+      onMouseLeave={() => setLean({ x: 0, y: 0 })}
+      className="security-vault group relative h-[296px] w-[381px] shrink-0"
+    >
       {/* body */}
       <div className="absolute left-[57px] top-[15px] h-[271px] w-[266px] rounded-[13px] bg-[#2b2b2b]" />
       {/* left hinges */}
@@ -52,29 +80,29 @@ function Vault() {
         className="absolute left-[121px] top-[81px] h-[139px] w-[139px]"
       />
 
-      {/* The owl. It rests peeking at the right, vertically centred on the vault,
-          and on hover slides horizontally to the vault centre (same height, no
-          vertical jump) and scales up a touch. Inside, the calm and angry owls
-          are stacked and cross-faded; once the angry one lands it sways (see the
-          .security-owl-angry keyframe in globals.css). Tailwind v4 routes
-          translate/scale through their own CSS properties, so the transition
-          names them explicitly (the section 05 gotcha) — and the sway animates
-          `transform`, which composes with them rather than fighting. */}
-      <div className="absolute left-[283px] top-[99px] z-20 h-[102px] w-[98px] transition-[translate,scale] duration-500 ease-out group-hover:-translate-x-[142px] group-hover:scale-[1.15] motion-reduce:transition-none">
-        <Image
-          src={`${ASSETS}/owl-calm.png`}
-          alt="Eine Eule wacht über den Tresor"
-          width={395}
-          height={411}
-          className="absolute inset-0 h-full w-full object-contain opacity-100 transition-opacity duration-300 group-hover:opacity-0 motion-reduce:transition-none"
-        />
-        <Image
-          src={`${ASSETS}/owl-guard.png`}
-          alt=""
-          width={393}
-          height={411}
-          className="security-owl-angry absolute inset-0 h-full w-full origin-bottom object-contain opacity-0 transition-opacity duration-300 group-hover:opacity-100 motion-reduce:transition-none"
-        />
+      {/* Owl — outer wrapper: rests bottom-right, slides to bottom-centre on
+          hover (no vertical jump; -142px lands its centre on the vault centre). */}
+      <div className="absolute bottom-[6px] left-[283px] z-20 h-[102px] w-[98px] translate-x-0 transition-[translate] duration-500 ease-out group-hover:-translate-x-[142px] motion-reduce:transition-none">
+        {/* inner wrapper: minimal magnetic lean toward the cursor */}
+        <div
+          className="relative h-full w-full transition-transform duration-200 ease-out motion-reduce:transition-none"
+          style={{ transform: `translate(${lean.x}px, ${lean.y}px)` }}
+        >
+          <Image
+            src={`${ASSETS}/owl-calm.png`}
+            alt="Eine Eule wacht über den Tresor"
+            width={395}
+            height={411}
+            className="absolute inset-0 h-full w-full object-contain opacity-100 transition-opacity duration-300 group-hover:opacity-0 motion-reduce:transition-none"
+          />
+          <Image
+            src={`${ASSETS}/owl-guard.png`}
+            alt=""
+            width={393}
+            height={411}
+            className="absolute inset-0 h-full w-full object-contain opacity-0 transition-opacity duration-300 group-hover:opacity-100 motion-reduce:transition-none"
+          />
+        </div>
       </div>
     </div>
   )
