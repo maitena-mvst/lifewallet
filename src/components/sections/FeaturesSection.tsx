@@ -16,6 +16,15 @@ const PHONES = [
 const SELECTED_BG = "bg-gradient-to-r from-[#E7E9BB] to-[#FAFBF4]"
 const IDLE_BG = "bg-[#f1ede8]"
 
+// Mobile carousel — one card per feature: illustration on top, label,
+// then the matching phone screen clipped at the bottom.
+const MOBILE_CARDS = [
+  { label: "KI, die mitdenkt und Dich erinnert", illus: "/assets/home/06-features/illus-ki.svg", phone: PHONES[0] },
+  { label: "Teilen mit Vertrauen", illus: "/assets/home/06-features/illus-teilen.svg", phone: PHONES[2] },
+  { label: "Ihre Brieftasche – alles griffbereit", illus: "/assets/home/06-features/illus-brieftasche.svg", phone: PHONES[1] },
+  { label: "Planung, die einfach erscheint", illus: "/assets/home/06-features/illus-planung.svg", phone: PHONES[3] },
+]
+
 export default function FeaturesSection() {
   // Top-left block selected by default.
   const [active, setActive] = useState(0)
@@ -35,50 +44,47 @@ export default function FeaturesSection() {
         </h2>
 
         {/* ── Mobile: horizontal snap-carousel ── */}
-        <div className="mt-8 -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:hidden">
+        <div className="mt-8 -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 scroll-px-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:hidden">
 
-          {/* Card 1 — KI */}
-          <div className="relative h-[640px] w-[305px] shrink-0 snap-start overflow-hidden rounded-2xl bg-gradient-to-r from-[#E7E9BB] to-[#FAFBF4]">
-            <p className="absolute left-5 top-5 max-w-[60%] text-[18px] font-semibold leading-7 text-[#1a2d28]">KI, die mitdenkt und Dich erinnert</p>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/assets/home/06-features/illus-ki.svg" alt="" className="absolute bottom-6 right-8 h-[440px] w-auto" />
-          </div>
+          {MOBILE_CARDS.map((card) => (
+            <div
+              key={card.label}
+              className={`flex h-[70svh] max-h-[640px] min-h-[520px] w-[80vw] max-w-[320px] shrink-0 snap-start flex-col items-center overflow-hidden rounded-2xl pt-8 ${SELECTED_BG}`}
+            >
+              {/* Illustration — small, centered */}
+              <div className="flex h-[120px] w-full shrink-0 items-center justify-center px-6">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={card.illus} alt="" className="max-h-full max-w-full object-contain" />
+              </div>
 
-          {/* Card 2 — Teilen */}
-          <div className="relative h-[640px] w-[305px] shrink-0 snap-start overflow-hidden rounded-2xl bg-[#f1ede8]">
-            <p className="absolute left-5 top-5 text-[18px] font-semibold text-[#1a2d28]">Teilen mit Vertrauen</p>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/assets/home/06-features/illus-teilen.svg" alt="" className="absolute bottom-[30px] right-[-140px] h-auto w-[480px] max-w-none" />
-          </div>
+              {/* Label */}
+              <p className="mt-4 shrink-0 px-6 text-center text-[19px] font-semibold leading-7 text-[#1a2d28]">{card.label}</p>
 
-          {/* Card 3 — Brieftasche */}
-          <div className="relative h-[640px] w-[305px] shrink-0 snap-start overflow-hidden rounded-2xl bg-[#f1ede8]">
-            <p className="absolute left-5 top-5 text-[18px] font-semibold text-[#1a2d28]">Ihre Brieftasche – alles griffbereit</p>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/assets/home/06-features/illus-brieftasche.svg" alt="" className="absolute bottom-12 right-0 w-[88%]" />
-          </div>
-
-          {/* Card 4 — Planung */}
-          <div className="flex h-[640px] w-[305px] shrink-0 snap-start flex-col overflow-hidden rounded-2xl bg-[#f1ede8]">
-            <div className="flex flex-1 items-center justify-center overflow-hidden px-6">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/assets/home/06-features/illus-planung.svg" alt="" className="w-full" />
+              {/* Phone screen — clipped at the bottom */}
+              <div className="mt-5 flex w-full flex-1 items-start justify-center overflow-hidden">
+                {card.phone.type === "video" ? (
+                  <video
+                    src={card.phone.src}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-[74%] max-w-[250px] rounded-t-[26px]"
+                  />
+                ) : (
+                  <Image
+                    src={card.phone.src}
+                    alt=""
+                    width={784}
+                    height={1594}
+                    quality={100}
+                    sizes="250px"
+                    className="w-[74%] max-w-[250px] rounded-t-[26px]"
+                  />
+                )}
+              </div>
             </div>
-            <p className="shrink-0 px-5 py-5 text-[18px] font-medium text-[#1a2d28]">Planung, die einfach erscheint</p>
-          </div>
-
-          {/* Card 5 — Wallet */}
-          <div className="flex h-[640px] w-[305px] shrink-0 snap-start items-center justify-center overflow-hidden rounded-2xl bg-[#f1ede8] p-5">
-            <Image
-              src="/assets/home/06-features/illus-wallet.png"
-              alt="Deine Wallet – alles griffbereit"
-              width={218}
-              height={474}
-              quality={100}
-              sizes="305px"
-              className="h-full w-auto object-contain"
-            />
-          </div>
+          ))}
 
         </div>
 
