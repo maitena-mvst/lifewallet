@@ -41,8 +41,9 @@ export default function FormSection() {
             <Image
               src={OWL}
               alt="Wally, die Eule von lifewallet, winkt"
-              width={1075}
-              height={788}
+              width={640}
+              height={469}
+              sizes="140px"
               className="h-auto w-[140px]"
             />
 
@@ -82,10 +83,10 @@ export default function FormSection() {
             <Image
               src={OWL}
               alt="Wally, die Eule von lifewallet, winkt"
-              width={1075}
-              height={788}
+              width={640}
+              height={469}
+              sizes="210px"
               className="pointer-events-none absolute right-12 top-1/2 z-0 h-auto w-[210px] -translate-y-1/2 select-none"
-              priority={false}
             />
           </div>
         </div>
