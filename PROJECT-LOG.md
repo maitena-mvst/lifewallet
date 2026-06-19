@@ -70,6 +70,27 @@ Connecting the sheet is **config, not code** — see `.env.example` (committed) 
   by DOM measurement (full-page headless screenshots blank at this scroll depth — section 05's
   sticky 300vh track, same as 06/08/09/10); mobile measured + screenshot-spot-checked.
 
+### Hardening + DSGVO (added 2026-06-19, deployed)
+
+- **Consent notice** under the form (both layouts), linking to `/datenschutz`. The submit click is
+  the affirmative consent (Art. 6 (1) (a)) — acceptable for this single-purpose form; legal basis
+  already documented in datenschutz §2.1.
+- **Honeypot** — an offscreen `website` field (`aria-hidden`, `tabIndex -1`, autofill-suppressed).
+  The route **silently drops** any submission where it's filled (returns `{success:true}` without
+  forwarding), so bots learn nothing and no row is written.
+- **Shared secret** — the route sends `WAITLIST_WEBHOOK_SECRET` with each webhook call; the Apps
+  Script rejects calls whose `secret` doesn't match its `SHARED_SECRET` const. **Graceful**: if
+  either side is unset the check is skipped, so there's no downtime while the script is updated.
+  Secret lives in `.env.local` + Vercel (prod/dev) and the script — **never committed** (the repo's
+  `waitlist.gs` keeps `SHARED_SECRET = ""`).
+- **Privacy fix** — datenschutz §3.2 previously claimed "no transfer outside the EU", which the
+  Google Sheets (Google LLC, US) + Vercel (US) setup contradicted. Rewrote it to scope the
+  German-servers claim to **app/document data**, and disclosed the website/waitlist US processors
+  under the EU-US Data Privacy Framework / SCCs (Art. 46). Added Google as an Art. 28 processor to
+  §2.1. *(Wording drafted for dev accuracy — final legal sign-off is the team's.)*
+- **Cookie banner: not required** — no non-essential cookies (self-hosted `next/font`, no analytics,
+  no third-party scripts, no client storage). Revisit if analytics are ever added.
+
 ---
 
 ## 06 — Features · 2026-06-18
