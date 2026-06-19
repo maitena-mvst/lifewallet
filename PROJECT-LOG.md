@@ -5,6 +5,23 @@ The homepage is composed of 12 sections (`src/components/sections/`), built one 
 
 ---
 
+## Favicon + social share image · 2026-06-19
+
+Added the favicon and Open Graph / Twitter share image via Next's App-Router file conventions
+(all in `src/app/`):
+- **Favicon** (Figma node `6890-15978`, the olive wallet mark on a cream square): `favicon.ico`
+  (16/32/48), `icon.png` (192), `apple-icon.png` (180). The source is a full-bleed opaque square,
+  so no compositing was needed; generated with PIL from a 4× Figma export.
+- **Share image** (Figma node `6890-15481`, the owl-pattern thumbnail): `opengraph-image.png` +
+  `twitter-image.png` (1344×816, 2× export). Next auto-emits `og:image`/`twitter:image` with
+  dimensions.
+- **`layout.tsx` metadata**: set `metadataBase` (`https://lifewallet.vercel.app` — **switch to
+  lifewallet.de when the domain is live**) so share URLs are absolute, a German title/description,
+  `openGraph` (locale `de_DE`), and `twitter.card = summary_large_image`. Replaced the default
+  `Lifewallet`/English placeholder. Verified the rendered `<head>` emits all icon + OG/Twitter tags.
+
+---
+
 ## 07 — CTA banner + nav CTA wiring · 2026-06-19
 
 Built the mid-page CTA banner (section 07, `#07-waiting-list-banner`) from the Figma desktop node
