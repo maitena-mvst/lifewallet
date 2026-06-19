@@ -58,7 +58,13 @@ export default function DatenschutzPage() {
             Diese wird verwendet, um Sie über den Start von lifewallet und relevante Neuigkeiten zu informieren.
           </p>
           <p className="mb-1 text-sm">Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO (Einwilligung)</p>
-          <p className="mb-6 text-sm">Speicherdauer: Bis zur Abmeldung von der Warteliste oder auf Ihren Widerruf hin.</p>
+          <p className="mb-1 text-sm">Speicherdauer: Bis zur Abmeldung von der Warteliste oder auf Ihren Widerruf hin.</p>
+          <p className="mb-6 text-sm">
+            Auftragsverarbeiter: Die Warteliste wird über Google Sheets verwaltet (Google Ireland
+            Ltd., Gordon House, Barrow Street, Dublin 4, Irland; eine Verarbeitung durch Google LLC,
+            USA, ist möglich). Es besteht ein Vertrag zur Auftragsverarbeitung gemäß Art. 28 DSGVO.
+            Zu Datenübermittlungen in Drittländer siehe Ziffer 3.2.
+          </p>
 
           <h3 className="mb-3 text-base font-semibold">2.2 Nutzung der App</h3>
           <p className="mb-3 leading-relaxed">Bei der Registrierung und Nutzung der lifewallet-App erheben wir folgende Daten:</p>
@@ -92,10 +98,18 @@ export default function DatenschutzPage() {
             auf Ihre unverschlüsselten Inhalte haben.
           </p>
 
-          <h3 className="mb-3 text-base font-semibold">3.2 Serverstandort</h3>
+          <h3 className="mb-3 text-base font-semibold">3.2 Serverstandort und Datenübermittlung</h3>
+          <p className="mb-3 leading-relaxed">
+            Alle in der lifewallet-App gespeicherten Inhalte (Dokumente, Vertragsdaten und sonstige
+            von Ihnen eingegebene Informationen) werden ausschließlich auf Servern in Deutschland
+            gespeichert und verarbeitet.
+          </p>
           <p className="mb-6 leading-relaxed">
-            Alle Daten werden ausschließlich auf Servern in Deutschland gespeichert und verarbeitet.
-            Eine Übermittlung in Länder außerhalb der EU findet nicht statt.
+            Unsere Marketing-Website (einschließlich der Warteliste auf lifewallet.de) wird bei der
+            Vercel Inc. (USA) gehostet; die Verwaltung der Warteliste-Anmeldungen erfolgt über Google
+            Sheets. Dabei kann eine Übermittlung personenbezogener Daten (Ihrer E-Mail-Adresse) in die
+            USA stattfinden. Diese Übermittlung ist durch das EU-US Data Privacy Framework sowie durch
+            EU-Standardvertragsklauseln gemäß Art. 46 DSGVO abgesichert.
           </p>
 
           <h3 className="mb-3 text-base font-semibold">3.3 BSI-Standard</h3>

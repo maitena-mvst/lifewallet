@@ -1,6 +1,7 @@
 "use client"
 
 import { useId, useState } from "react"
+import Link from "next/link"
 import Button from "@/components/ui/Button"
 
 type Status = "idle" | "loading" | "success" | "error"
@@ -37,6 +38,9 @@ export default function WaitlistForm({
 }) {
   const id = useId()
   const [email, setEmail] = useState("")
+  // Honeypot: hidden from real users, bots tend to fill it. Submitted to the
+  // server, which silently drops any request where it's non-empty.
+  const [website, setWebsite] = useState("")
   const [status, setStatus] = useState<Status>("idle")
   const [error, setError] = useState("")
 
@@ -58,7 +62,7 @@ export default function WaitlistForm({
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: value }),
+        body: JSON.stringify({ email: value, website }),
       })
       if (!res.ok) throw new Error(`Request failed: ${res.status}`)
       setStatus("success")
@@ -102,6 +106,23 @@ export default function WaitlistForm({
       noValidate
       className={`w-full ${stack ? "flex flex-col gap-2" : ""}`}
     >
+      {/* Honeypot — kept out of the layout and away from humans + assistive tech.
+          A real submission leaves this empty; the server drops it if filled. */}
+      <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+        <label htmlFor={`${id}-website`}>Webseite (nicht ausfüllen)</label>
+        <input
+          id={`${id}-website`}
+          type="text"
+          name="website"
+          tabIndex={-1}
+          autoComplete="off"
+          data-lpignore="true"
+          data-1p-ignore
+          value={website}
+          onChange={(e) => setWebsite(e.target.value)}
+        />
+      </div>
+
       <div className={stack ? "flex flex-col gap-2" : "flex items-start gap-4"}>
         <div className={stack ? "w-full" : "min-w-0 flex-1"}>
           <label htmlFor={id} className="sr-only">
@@ -150,6 +171,26 @@ export default function WaitlistForm({
           {error}
         </p>
       )}
+
+      {/* DSGVO consent notice — the submit click is the affirmative consent
+          (Art. 6 (1) (a)); the form's sole, clearly-stated purpose is the
+          waiting list. See datenschutz §2.1. */}
+      <p
+        className={`mt-3 text-xs leading-5 text-lime-700/80 ${
+          stack ? "text-center" : ""
+        }`}
+      >
+        Mit dem Eintragen willigst Du ein, dass wir Dich per E-Mail über den Start
+        von lifewallet informieren. Eine Abmeldung ist jederzeit möglich. Mehr dazu
+        in unserer{" "}
+        <Link
+          href="/datenschutz"
+          className="underline underline-offset-2 hover:text-lime-700"
+        >
+          Datenschutzerklärung
+        </Link>
+        .
+      </p>
     </form>
   )
 }

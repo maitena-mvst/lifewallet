@@ -8,7 +8,13 @@ import { NextRequest, NextResponse } from "next/server"
  */
 export async function POST(req: NextRequest) {
   try {
-    const { email, name } = await req.json()
+    const { email, name, website } = await req.json()
+
+    // Honeypot: real users never fill `website`. If it's set, it's a bot —
+    // return success so the bot learns nothing, but don't record anything.
+    if (typeof website === "string" && website.trim() !== "") {
+      return NextResponse.json({ success: true })
+    }
 
     if (!email || typeof email !== "string" || !/^\S+@\S+\.\S+$/.test(email)) {
       return NextResponse.json({ error: "A valid email is required" }, { status: 400 })
@@ -27,7 +33,12 @@ export async function POST(req: NextRequest) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       // Apps Script returns a 302 → googleusercontent redirect; fetch follows it.
-      body: JSON.stringify({ email: email.trim(), name: name ?? "" }),
+      // `secret` lets the script reject direct POSTs to its public /exec URL.
+      body: JSON.stringify({
+        email: email.trim(),
+        name: name ?? "",
+        secret: process.env.WAITLIST_WEBHOOK_SECRET ?? "",
+      }),
     })
 
     if (!res.ok) {
