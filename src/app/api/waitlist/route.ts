@@ -41,11 +41,23 @@ export async function POST(req: NextRequest) {
       }),
     })
 
-    if (!res.ok) {
+    // Apps Script returns HTTP 200 even for its own errors (e.g. "doPost not
+    // found" HTML, or {error:"unauthorized"}). Confirm the body really says
+    // success — otherwise the form would falsely report success while the lead
+    // is silently dropped.
+    const text = await res.text()
+    let appended = false
+    try {
+      appended = res.ok && JSON.parse(text)?.success === true
+    } catch {
+      appended = false
+    }
+
+    if (!appended) {
       console.error(
-        "Waitlist API: webhook responded",
+        "Waitlist API: webhook did not confirm success",
         res.status,
-        await res.text().catch(() => "")
+        text.slice(0, 200)
       )
       return NextResponse.json({ error: "Upstream error" }, { status: 502 })
     }
