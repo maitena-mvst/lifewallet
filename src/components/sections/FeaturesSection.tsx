@@ -57,8 +57,8 @@ export default function FeaturesSection() {
                 <img src={card.illus} alt="" className="max-h-full max-w-full object-contain" />
               </div>
 
-              {/* Label */}
-              <p className="mt-4 shrink-0 px-6 text-center text-[19px] font-semibold leading-7 text-[#1a2d28]">{card.label}</p>
+              {/* Label — reserve 2 lines so single-line cards align with the rest */}
+              <p className="mt-4 min-h-14 shrink-0 px-6 text-center text-[19px] font-semibold leading-7 text-[#1a2d28]">{card.label}</p>
 
               {/* Phone screen — clipped at the bottom */}
               <div className="mt-5 flex w-full flex-1 items-start justify-center overflow-hidden">
