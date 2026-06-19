@@ -5,6 +5,73 @@ The homepage is composed of 12 sections (`src/components/sections/`), built one 
 
 ---
 
+## 11 — Form (waiting list, Google Sheets CRM) · 2026-06-19
+
+Built the waiting-list form (section 11, `#11-form`) from the Figma desktop node `6546-17297`
+and mobile node `6655-39088`. A lime-gradient card with label **"lifewallet bald ausprobieren"**,
+headline **"Sei eine der ersten Personen, die Wally kennenlernt"**, two body paragraphs, an
+email capture form, and a **waving Wally owl**. This is the site's one **CRM-connected** section —
+submissions are appended to a **Google Sheet** as leads.
+
+### Two pieces: layout (server) + form (client)
+
+- **`src/components/sections/FormSection.tsx`** (server component) — the card, copy, and owl, in
+  **two layouts**: mobile (`<lg`) is a **centered column** (label → headline+body → owl → stacked
+  full-width form); desktop (`lg`+) puts the copy + a **horizontal form row** on the left
+  (`max-w-[700px]`) with the owl **absolutely positioned, vertically centred on the right**
+  (`right-12 top-1/2 -translate-y-1/2 w-[210px]`). Card uses the shared `.hero-gradient`
+  (Figma's gradient is the hero's stops at a slightly different angle — reused for consistency,
+  same call as the footer). Gutters follow site convention (`max-w-[1440px] px-5 lg:px-10`),
+  not the Figma node's 80px. Verified at 1440: card 1360×368, owl 210×154 (88px right gap);
+  at 390: card 350, owl centred, input + button both 302px full-width and stacked.
+- **`src/components/form/WaitlistForm.tsx`** (client component) — holds the email state and submit
+  logic, so it drops into both layouts via a `variant` prop (`"row"` desktop / `"stack"` mobile).
+  States: idle → loading ("Wird gesendet …") → **success** (replaces the form with a green
+  confirmation) or **error** (German message under the field, `role="alert"`). Reuses the shared
+  `Button` (primary). Empty/invalid email is caught client-side before the request. The mail icon
+  is an inline SVG envelope (no Figma export needed).
+
+### The backend — `src/app/api/waitlist/route.ts` (Apps Script webhook)
+
+**Decision (per request):** dropped the original `googleapis` service-account approach in favour of
+a **Google Apps Script web app** — it needs only a normal Google account (no Google Cloud Console,
+no service account, no JSON key) and reduces the config to **one env var**. `googleapis` was
+uninstalled (zero runtime deps beyond Next/React now). *(Note: the Cloud Sheets API path was also
+free — no billing required — the switch was purely to avoid the Console's fiddliness.)*
+
+`POST {email}` → validates the email shape (→ 400) → **forwards it server-side** to
+`WAITLIST_WEBHOOK_URL` (the Apps Script `/exec` URL). The Apps Script appends a row
+`[Date, email, name]` to the bound Sheet's first tab. Calling it server-side means the webhook URL
+is never exposed to the browser and there's no CORS. Missing var → **503 + clear server log**;
+upstream failure → **502**. The form sends only email; `name` is forwarded empty.
+
+### Setup — one env var + paste the script
+
+Connecting the sheet is **config, not code** — see `.env.example` (committed) and the script source
+`apps-script/waitlist.gs` (committed). Steps: (1) create the Sheet, header row
+`Timestamp · Email · Name`; (2) **Extensions → Apps Script**, paste `apps-script/waitlist.gs`;
+(3) **Deploy → Web app**, *Execute as: Me*, *Who has access: Anyone*, copy the `/exec` URL;
+(4) put it in `.env.local` as `WAITLIST_WEBHOOK_URL` (and the same on Vercel). The script reads the
+**first sheet** (`getSheets()[0]`), so it's locale-proof (German names the tab "Tabelle1").
+
+### Assets — `public/assets/home/11-form/`
+
+- `owl-wave.png` (1075×788) — the waving Wally (node `6548:17390`, owl + both hands, shadow ellipse
+  dropped for a cleaner edge). Same grain-fragment export problem as 05/08/09: the Figma PNG came
+  back **fully opaque with the lime card baked in**, knocked out with a numpy edge-flood-fill
+  (connectivity-based, so the enclosed white eyes survive) + 2px alpha erosion to kill the lime
+  halo. Verified corner alpha 0 / centre 255. Reused at `w-[210px]` (desktop) / `w-[140px]` (mobile).
+- Label owl reuses `/Me.svg?v=2` (28×24 desktop / 36px mobile), matching sections 03/05/08/09/10.
+
+### Verified
+
+- Submit flow exercised live: empty email → 400; valid email → **503** (no creds yet — becomes 200
+  once the sheet is connected); the form's error state renders the German message. Desktop verified
+  by DOM measurement (full-page headless screenshots blank at this scroll depth — section 05's
+  sticky 300vh track, same as 06/08/09/10); mobile measured + screenshot-spot-checked.
+
+---
+
 ## 06 — Features · 2026-06-18
 
 Built the features section (section 06) from the Figma desktop node `6548-15390` and mobile node
