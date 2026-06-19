@@ -5,6 +5,42 @@ The homepage is composed of 12 sections (`src/components/sections/`), built one 
 
 ---
 
+## 07 — CTA banner + nav CTA wiring · 2026-06-19
+
+Built the mid-page CTA banner (section 07, `#07-waiting-list-banner`) from the Figma desktop node
+`6546-16762` and mobile node `6655-34812`, and fixed the navigation CTA.
+
+### `src/components/sections/WaitingListBannerSection.tsx` (server component)
+
+A cream (`#f1f2d3`) `rounded-2xl` card with headline **"Alles geregelt. Ab heute."**, sub
+**"Wally ist bereit – und freut sich auf Dich."**, and an **"Auf die Warteliste"** button →
+`#11-form`. Two layouts: desktop (`lg`+) is a fixed `h-[241px]` card with text vertically centred on
+the left and the decorative panel pinned right; mobile (`<lg`) centres the text/button on top with
+the pattern filling the bottom full-bleed. Reuses the shared `Button`.
+
+### The decorative owl-pattern — rastered (same call as the 06 cards)
+
+The right/bottom decoration is a wall of the owl-logo motif (overlapping circles + pill stacks in
+`#b6c4db`/`#d2d58b`/`#a0bead`/`#30554b`) with one prominent owl — **hundreds of vector nodes**, so it
+was exported as a raster rather than rebuilt. Two assets in `public/assets/home/07-cta-banner/`:
+`pattern-desktop.png` (the right panel, node `6546:16764`) and `pattern-mobile.png` (the bottom band,
+cropped from a 2× export of the mobile frame). **Cream is baked in** so the panels blend into the card;
+the **white page-margins / rounded-corner wedges were knocked out to transparent** with the same
+numpy edge-flood-fill used for the owls (connectivity-based, so the owl's enclosed white eyes survive).
+Placed with `next/image` + `sizes` so the optimizer serves a small variant. Verified at 1440 (card
+1360×241, pattern right x913→1360, no text overlap) and 390 (full-bleed bottom, seamless blend).
+
+### Nav CTA fix
+
+The desktop nav CTA already linked to `#11-form` and scrolls correctly (verified — earlier
+"scrolls to top" reports were smooth-scroll-in-flight measurement noise; it lands with the form at
+viewport top). The real gap: the **mobile burger menu had no CTA at all** — added
+"Frühen Zugang sichern" (`#11-form`, full-width, closes the menu on tap) after the link list. The
+form only became a real target this session (it was an empty stub before), which is likely why the
+CTA "didn't lead anywhere" previously.
+
+---
+
 ## 11 — Form (waiting list, Google Sheets CRM) · 2026-06-19
 
 Built the waiting-list form (section 11, `#11-form`) from the Figma desktop node `6546-17297`

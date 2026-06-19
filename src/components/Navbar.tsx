@@ -143,6 +143,11 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
         ))}
       </ul>
 
+      {/* CTA — links to the waiting-list form */}
+      <Button href={CTA.href} onClick={onClose} className="mt-10 w-full">
+        {CTA.label}
+      </Button>
+
       {/* Footer */}
       <div className="mt-auto border-t border-lime-300/25 pt-6">
         <div className="flex flex-wrap gap-5 text-[13px] text-lime-300/70">
