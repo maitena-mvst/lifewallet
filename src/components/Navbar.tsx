@@ -6,10 +6,10 @@ import Link from "next/link"
 import Button from "@/components/ui/Button"
 
 // ?v= busts stale browser caches when the SVG content changes
-const LOGO = "/Logo.svg?v=2"
+const LOGO = "/Logo.svg?v=3"
 
 const NAV_LINKS = [
-  { label: "Warum lifewallet", href: "#03-the-problem" },
+  { label: "Warum mywally", href: "#03-the-problem" },
   { label: "Wie funktioniert’s", href: "#05-process" },
   { label: "Sicherheit", href: "#09-security" },
   { label: "Über uns", href: "#10-team" },
@@ -19,7 +19,6 @@ const CTA = { label: "Frühen Zugang sichern", href: "#11-form" }
 
 const FOOTER_LINKS = [
   { label: "Impressum", href: "#" },
-  { label: "AGB", href: "#" },
   { label: "Datenschutz", href: "#" },
 ]
 
@@ -46,7 +45,7 @@ export default function Navbar() {
         <span className="inline-flex shrink-0">
           <Image
             src={LOGO}
-            alt="lifewallet"
+            alt="mywally"
             width={138}
             height={26}
             priority
@@ -105,7 +104,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
         <span className="inline-flex">
           <Image
             src={LOGO}
-            alt="lifewallet"
+            alt="mywally"
             width={138}
             height={26}
             className="h-auto w-[138px] [filter:brightness(0)_invert(0.92)_sepia(0.25)_saturate(2)_hue-rotate(20deg)]"

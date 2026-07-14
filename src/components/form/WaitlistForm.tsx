@@ -1,7 +1,8 @@
 "use client"
 
-import { useId, useState } from "react"
+import { useId, useRef, useState } from "react"
 import Link from "next/link"
+import { track } from "@vercel/analytics"
 import Button from "@/components/ui/Button"
 
 type Status = "idle" | "loading" | "success" | "error"
@@ -43,6 +44,7 @@ export default function WaitlistForm({
   const [website, setWebsite] = useState("")
   const [status, setStatus] = useState<Status>("idle")
   const [error, setError] = useState("")
+  const hasTrackedStart = useRef(false)
 
   const stack = variant === "stack"
   const loading = status === "loading"
@@ -56,6 +58,7 @@ export default function WaitlistForm({
       return
     }
 
+    track("waitlist_submit", { variant })
     setStatus("loading")
     setError("")
     try {
@@ -65,9 +68,11 @@ export default function WaitlistForm({
         body: JSON.stringify({ email: value, website }),
       })
       if (!res.ok) throw new Error(`Request failed: ${res.status}`)
+      track("waitlist_success", { variant })
       setStatus("success")
       setEmail("")
     } catch {
+      track("waitlist_error", { variant })
       setStatus("error")
       setError("Etwas ist schiefgelaufen. Bitte versuch es später noch einmal.")
     }
@@ -141,6 +146,10 @@ export default function WaitlistForm({
               inputMode="email"
               value={email}
               onChange={(e) => {
+                if (!hasTrackedStart.current) {
+                  track("waitlist_start", { variant })
+                  hasTrackedStart.current = true
+                }
                 setEmail(e.target.value)
                 if (status === "error") setStatus("idle")
               }}
@@ -181,7 +190,7 @@ export default function WaitlistForm({
         }`}
       >
         Mit dem Eintragen willigst Du ein, dass wir Dich per E-Mail über den Start
-        von lifewallet informieren. Eine Abmeldung ist jederzeit möglich. Mehr dazu
+        von mywally informieren. Eine Abmeldung ist jederzeit möglich. Mehr dazu
         in unserer{" "}
         <Link
           href="/datenschutz"

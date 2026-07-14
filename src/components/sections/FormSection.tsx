@@ -1,12 +1,12 @@
 import Image from "next/image"
 import WaitlistForm from "@/components/form/WaitlistForm"
 
-const LABEL = "lifewallet bald ausprobieren"
+const LABEL = "mywally bald ausprobieren"
 const HEADLINE = "Sei eine der ersten Personen, die Wally kennenlernt"
 const BODY_1 =
-  "lifewallet geht bald an den Start. Trag Dich jetzt in unsere Warteliste ein und wir informieren Dich per E-Mail, sobald lifewallet verfügbar ist."
+  "mywally geht bald an den Start. Trag Dich jetzt in unsere Warteliste ein und wir informieren Dich per E-Mail, sobald mywally verfügbar ist."
 const BODY_2 =
-  "Zum Start kannst Du lifewallet 14 Tage kostenlos testen und in Ruhe herausfinden, ob es zu Dir und Deinem Alltag passt."
+  "Zum Start kannst Du mywally 14 Tage kostenlos testen und in Ruhe herausfinden, ob es zu Dir und Deinem Alltag passt."
 
 const OWL = "/assets/home/11-form/owl-wave.png"
 
@@ -40,7 +40,7 @@ export default function FormSection() {
 
             <Image
               src={OWL}
-              alt="Wally, die Eule von lifewallet, winkt"
+              alt="Wally, die Eule von mywally, winkt"
               width={640}
               height={469}
               sizes="140px"
@@ -82,7 +82,7 @@ export default function FormSection() {
 
             <Image
               src={OWL}
-              alt="Wally, die Eule von lifewallet, winkt"
+              alt="Wally, die Eule von mywally, winkt"
               width={640}
               height={469}
               sizes="210px"

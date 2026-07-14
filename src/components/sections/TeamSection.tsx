@@ -20,12 +20,12 @@ export default function TeamSection() {
             </h2>
 
             <p className="text-sm leading-5 text-[#1a2d28]/70 lg:text-base lg:leading-6">
-              &ldquo;Aus unserem Alltag wissen wir, wie sehr Menschen belastet sind – von Unterlagen, von fehlender Zeit und von der Unsicherheit, was wirklich wichtig ist. Und wie allein Angehörige oft sind, wenn es darauf ankommt. Genau dafür entwickeln wir lifewallet.&rdquo;
+              &ldquo;Aus unserem Alltag wissen wir, wie sehr Menschen belastet sind – von Unterlagen, von fehlender Zeit und von der Unsicherheit, was wirklich wichtig ist. Und wie allein Angehörige oft sind, wenn es darauf ankommt. Genau dafür entwickeln wir mywally.&rdquo;
             </p>
 
             <div className="flex flex-col">
               <p className="text-base font-medium text-[#1a2d28]/90 lg:text-lg">Niki &amp; Tina</p>
-              <p className="text-sm text-[#1a2d28]/70">Gründerinnen von lifewallet</p>
+              <p className="text-sm text-[#1a2d28]/70">Gründerinnen von mywally</p>
             </div>
           </div>
 

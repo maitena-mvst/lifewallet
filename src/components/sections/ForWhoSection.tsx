@@ -7,7 +7,7 @@ const AUDIENCES = [
     illustration: "/assets/home/08-for-who/owl-single.png",
     width: 315,
     height: 276,
-    alt: "Eine Eule – lifewallet für Einzelpersonen",
+    alt: "Eine Eule – mywally für Einzelpersonen",
     title: "Für Einzelpersonen",
     body: "Weil Ordnung, Überblick und Vorsorge schon heute ein gutes Gefühl geben.",
   },
@@ -15,7 +15,7 @@ const AUDIENCES = [
     illustration: "/assets/home/08-for-who/owls-couple.png",
     width: 545,
     height: 276,
-    alt: "Zwei Eulen – lifewallet für Paare",
+    alt: "Zwei Eulen – mywally für Paare",
     title: "Für Paare",
     body: "Damit gemeinsame Verträge, Dokumente und wichtige Informationen sicher an einem Ort sind.",
   },
@@ -23,7 +23,7 @@ const AUDIENCES = [
     illustration: "/assets/home/08-for-who/owls-family.png",
     width: 785,
     height: 276,
-    alt: "Eine Eulenfamilie – lifewallet für Familien und Alleinerziehende",
+    alt: "Eine Eulenfamilie – mywally für Familien und Alleinerziehende",
     title: "Für Familien & Alleinerziehende",
     body: "Damit Unterlagen, Notfallinformationen und letzte Wünsche nicht verloren gehen.",
   },
@@ -31,7 +31,7 @@ const AUDIENCES = [
     illustration: "/assets/home/08-for-who/owls-elderly.png",
     width: 709,
     height: 276,
-    alt: "Zwei Eulen, eine mit Brille und Gehstock – lifewallet für ältere Menschen und Angehörige",
+    alt: "Zwei Eulen, eine mit Brille und Gehstock – mywally für ältere Menschen und Angehörige",
     title: "Für ältere Menschen & Angehörige",
     body: "Damit rechtzeitig geregelt ist, was später wichtig wird – und im Ernstfall niemand allein suchen oder entscheiden muss.",
   },
@@ -44,7 +44,7 @@ export default function ForWhoSection() {
         {/* Header */}
         <div className="flex items-center gap-2">
           <Image src={LABEL_ICON} alt="" width={28} height={24} className="h-auto w-7" />
-          <p className="text-base font-medium text-[#1a2d28]/90 lg:text-lg">Für wen lifewallet da ist</p>
+          <p className="text-base font-medium text-[#1a2d28]/90 lg:text-lg">Für wen mywally da ist</p>
         </div>
 
         <h2 className="mt-4 text-[24px] font-bold leading-8 text-[#1a2d28] lg:text-[30px] lg:leading-9">

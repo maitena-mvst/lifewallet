@@ -45,7 +45,7 @@ export default function PhoneShowcase({ badge = true }: { badge?: boolean }) {
       >
         <Image
           src={HERO_SCREENS}
-          alt="lifewallet App – Startbildschirm mit Wally und die Wallet-Übersicht"
+          alt="mywally App – Startbildschirm mit Wally und die Wallet-Übersicht"
           width={561}
           height={694}
           priority

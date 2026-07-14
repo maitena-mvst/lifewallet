@@ -116,7 +116,7 @@ export default function MoreThanAnAppSection() {
                 Mehr als eine App. Dein vertrauensvoller Begleiter.
               </h2>
               <p className="text-sm leading-5 text-[#4f5125]">
-                Wally ist Deine KI, die Dich durch lifewallet führt – stellt
+                Wally ist Deine KI, die Dich durch mywally führt – stellt
                 Fragen, erinnert Dich, erklärt Dokumente und ist immer dann da,
                 wenn Du sie brauchst.
               </p>
@@ -149,7 +149,7 @@ export default function MoreThanAnAppSection() {
                 Mehr als eine App. Dein vertrauensvoller Begleiter.
               </h2>
               <p className="mt-3 text-sm leading-5 text-[#1a2d28]/70">
-                Wally ist Deine KI, die Dich durch lifewallet führt – stellt
+                Wally ist Deine KI, die Dich durch mywally führt – stellt
                 Fragen, erinnert Dich, erklärt Dokumente und ist immer dann da,
                 wenn Du sie brauchst.
               </p>

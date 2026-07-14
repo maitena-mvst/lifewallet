@@ -157,7 +157,7 @@ function LeftColumn({ className = "" }: { className?: string }) {
             className="h-auto w-7"
           />
           <span className="text-[18px] font-medium leading-7 text-[#1a2d28]/90">
-            So begleitet Dich lifewallet
+            So begleitet Dich mywally
           </span>
         </div>
         <h2 className="text-[30px] font-bold leading-9 text-[#1a2d28]">
@@ -370,7 +370,7 @@ function MobileAccordion() {
             className="h-auto w-7"
           />
           <span className="text-[18px] font-medium leading-7 text-[#1a2d28]/90">
-            So begleitet Dich lifewallet
+            So begleitet Dich mywally
           </span>
         </div>
         <h2 className="text-[28px] font-bold leading-9 text-[#1a2d28]">

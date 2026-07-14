@@ -20,7 +20,7 @@ const SIGNALS = [
   {
     icon: `${ASSETS}/icon-zero-knowledge.svg`,
     title: "Zero-Knowledge-Architektur",
-    body: "Auch wir bei lifewallet können Deine Daten nicht einsehen.",
+    body: "Auch wir bei mywally können Deine Daten nicht einsehen.",
   },
   {
     icon: `${ASSETS}/icon-bsi.svg`,
@@ -125,7 +125,7 @@ export default function SecuritySection() {
             </h2>
 
             <p className="mt-3 text-sm leading-5 text-[#1a2d28]/70 lg:text-base lg:leading-6">
-              lifewallet wurde mit Blick auf Datenschutz, höchste Sicherheitsstandards und
+              mywally wurde mit Blick auf Datenschutz, höchste Sicherheitsstandards und
               juristische Sorgfalt entwickelt.
             </p>
           </div>

@@ -23,7 +23,7 @@ function HeroText() {
       </h1>
 
       <p className="max-w-[540px] text-base leading-6 text-lime-700">
-        lifewallet begleitet Dich durch alles, was im Alltag Energie kostet – Dokumente, Fristen,
+        mywally begleitet Dich durch alles, was im Alltag Energie kostet – Dokumente, Fristen,
         Verträge, Vorsorge. Wally kennt den Weg. Du musst nur den ersten Schritt machen.
       </p>
 

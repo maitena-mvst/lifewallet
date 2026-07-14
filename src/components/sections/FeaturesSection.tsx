@@ -40,7 +40,7 @@ export default function FeaturesSection() {
           <p className="text-base font-medium text-[#1a2d28]/90 lg:text-lg">Was Dich erwartet</p>
         </div>
         <h2 className="mt-4 text-[24px] font-bold leading-8 text-[#1a2d28] lg:text-[30px] lg:leading-9">
-          lifewallet ist mehr als ein digitaler Ordner
+          mywally ist mehr als ein digitaler Ordner
         </h2>
 
         {/* ── Mobile: horizontal snap-carousel ── */}

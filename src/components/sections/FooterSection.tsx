@@ -3,7 +3,6 @@ import Button from "@/components/ui/Button"
 
 const LEGAL_LINKS = [
   { href: "/impressum", label: "Impressum" },
-  { href: "/agb", label: "AGB" },
   { href: "/datenschutz", label: "Datenschutz" },
 ]
 
@@ -21,8 +20,8 @@ export default function FooterSection() {
         {/* Top row — logo + CTA */}
         <div className="flex flex-col gap-4 pt-6 lg:flex-row lg:items-center lg:justify-between lg:pt-6">
           <Image
-            src="/Logo.svg?v=2"
-            alt="lifewallet"
+            src="/Logo.svg?v=3"
+            alt="mywally"
             width={191}
             height={35}
             className="h-[35px] w-auto"

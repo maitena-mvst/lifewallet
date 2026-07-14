@@ -3,7 +3,7 @@ import Link from "next/link"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Datenschutz — lifewallet",
+  title: "Datenschutz — mywally",
 }
 
 export default function DatenschutzPage() {
@@ -14,7 +14,7 @@ export default function DatenschutzPage() {
       <header className="border-b border-[var(--color-divider)]">
         <div className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-4 lg:px-10">
           <Link href="/">
-            <Image src="/Logo.svg?v=2" alt="lifewallet" width={150} height={28} className="h-[28px] w-auto" />
+            <Image src="/Logo.svg?v=3" alt="mywally" width={150} height={28} className="h-[28px] w-auto" />
           </Link>
           <Link href="/" className="text-sm text-[var(--color-forest-700)] hover:text-[var(--color-forest)] transition-colors">
             ← Zurück zur Startseite
@@ -42,9 +42,9 @@ export default function DatenschutzPage() {
             <Link href="/impressum" className="text-[var(--color-forest-700)] underline underline-offset-2 hover:text-[var(--color-forest)]">
               Impressum
             </Link>{" "}
-            auf lifewallet.de zu finden. Bei Fragen zum Datenschutz erreichen Sie uns unter:{" "}
-            <a href="mailto:datenschutz@lifewallet.de" className="text-[var(--color-forest-700)] underline underline-offset-2 hover:text-[var(--color-forest)]">
-              datenschutz@lifewallet.de
+            auf mywally.me zu finden. Bei Fragen zum Datenschutz erreichen Sie uns unter:{" "}
+            <a href="mailto:datenschutz@mywally.me" className="text-[var(--color-forest-700)] underline underline-offset-2 hover:text-[var(--color-forest)]">
+              datenschutz@mywally.me
             </a>
           </p>
         </section>
@@ -55,7 +55,7 @@ export default function DatenschutzPage() {
           <h3 className="mb-3 text-base font-semibold">2.1 Warteliste / Early Access</h3>
           <p className="mb-3 leading-relaxed">
             Bei der Eintragung in unsere Warteliste erheben wir ausschließlich Ihre E-Mail-Adresse.
-            Diese wird verwendet, um Sie über den Start von lifewallet und relevante Neuigkeiten zu informieren.
+            Diese wird verwendet, um Sie über den Start von mywally und relevante Neuigkeiten zu informieren.
           </p>
           <p className="mb-1 text-sm">Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO (Einwilligung)</p>
           <p className="mb-1 text-sm">Speicherdauer: Bis zur Abmeldung von der Warteliste oder auf Ihren Widerruf hin.</p>
@@ -67,7 +67,7 @@ export default function DatenschutzPage() {
           </p>
 
           <h3 className="mb-3 text-base font-semibold">2.2 Nutzung der App</h3>
-          <p className="mb-3 leading-relaxed">Bei der Registrierung und Nutzung der lifewallet-App erheben wir folgende Daten:</p>
+          <p className="mb-3 leading-relaxed">Bei der Registrierung und Nutzung der mywally-App erheben wir folgende Daten:</p>
           <ul className="mb-3 list-disc space-y-1 pl-6 text-sm leading-relaxed">
             <li>E-Mail-Adresse (für die Registrierung)</li>
             <li>Von Ihnen hochgeladene Dokumente und Dateien</li>
@@ -93,19 +93,19 @@ export default function DatenschutzPage() {
 
           <h3 className="mb-3 text-base font-semibold">3.1 Verschlüsselung</h3>
           <p className="mb-6 leading-relaxed">
-            Alle in der lifewallet-App gespeicherten Daten werden Ende-zu-Ende verschlüsselt. Wir verwenden
+            Alle in der mywally-App gespeicherten Daten werden Ende-zu-Ende verschlüsselt. Wir verwenden
             eine Zero-Knowledge-Architektur — das bedeutet, dass selbst wir als Betreiber keinen Zugriff
             auf Ihre unverschlüsselten Inhalte haben.
           </p>
 
           <h3 className="mb-3 text-base font-semibold">3.2 Serverstandort und Datenübermittlung</h3>
           <p className="mb-3 leading-relaxed">
-            Alle in der lifewallet-App gespeicherten Inhalte (Dokumente, Vertragsdaten und sonstige
+            Alle in der mywally-App gespeicherten Inhalte (Dokumente, Vertragsdaten und sonstige
             von Ihnen eingegebene Informationen) werden ausschließlich auf Servern in Deutschland
             gespeichert und verarbeitet.
           </p>
           <p className="mb-6 leading-relaxed">
-            Unsere Marketing-Website (einschließlich der Warteliste auf lifewallet.de) wird bei der
+            Unsere Marketing-Website (einschließlich der Warteliste auf mywally.me) wird bei der
             Vercel Inc. (USA) gehostet; die Verwaltung der Warteliste-Anmeldungen erfolgt über Google
             Sheets. Dabei kann eine Übermittlung personenbezogener Daten (Ihrer E-Mail-Adresse) in die
             USA stattfinden. Diese Übermittlung ist durch das EU-US Data Privacy Framework sowie durch
@@ -114,7 +114,7 @@ export default function DatenschutzPage() {
 
           <h3 className="mb-3 text-base font-semibold">3.3 BSI-Standard</h3>
           <p className="leading-relaxed">
-            lifewallet wurde nach BSI-Standard entwickelt — dem deutschen Maßstab für Informationssicherheit.
+            mywally wurde nach BSI-Standard entwickelt — dem deutschen Maßstab für Informationssicherheit.
             Wir streben die Zertifizierung nach ISO 27001 an.
           </p>
         </section>
@@ -127,7 +127,7 @@ export default function DatenschutzPage() {
           </p>
           <ul className="list-disc space-y-1 pl-6 text-sm leading-relaxed">
             <li>An von Ihnen explizit autorisierte Vertrauenspersonen innerhalb der App</li>
-            <li>An technische Dienstleister, die im Auftrag von lifewallet handeln (Auftragsverarbeitung gemäß Art. 28 DSGVO)</li>
+            <li>An technische Dienstleister, die im Auftrag von mywally handeln (Auftragsverarbeitung gemäß Art. 28 DSGVO)</li>
             <li>Wenn dies gesetzlich vorgeschrieben ist</li>
           </ul>
         </section>
@@ -135,7 +135,7 @@ export default function DatenschutzPage() {
         <section className="mb-10">
           <h2 className="mb-4 text-xl font-bold">5. KI-Verarbeitung</h2>
           <p className="leading-relaxed">
-            lifewallet nutzt künstliche Intelligenz (Wally) zur Analyse und Strukturierung Ihrer Dokumente.
+            mywally nutzt künstliche Intelligenz (Wally) zur Analyse und Strukturierung Ihrer Dokumente.
             Die KI-Verarbeitung erfolgt ausschließlich in einer Zero-Knowledge-Umgebung. Ihre Daten werden
             nicht für das Training von KI-Modellen verwendet.
           </p>
@@ -152,7 +152,7 @@ export default function DatenschutzPage() {
         <section className="mb-10">
           <h2 className="mb-4 text-xl font-bold">7. Ihre Rechte</h2>
           <p className="mb-3 leading-relaxed">
-            Sie haben gegenüber lifewallet folgende Rechte bezüglich Ihrer personenbezogenen Daten:
+            Sie haben gegenüber mywally folgende Rechte bezüglich Ihrer personenbezogenen Daten:
           </p>
           <ul className="mb-4 list-disc space-y-1 pl-6 text-sm leading-relaxed">
             <li>Auskunftsrecht (Art. 15 DSGVO)</li>
@@ -165,8 +165,8 @@ export default function DatenschutzPage() {
           </ul>
           <p className="text-sm">
             Zur Ausübung Ihrer Rechte wenden Sie sich bitte an:{" "}
-            <a href="mailto:datenschutz@lifewallet.de" className="text-[var(--color-forest-700)] underline underline-offset-2 hover:text-[var(--color-forest)]">
-              datenschutz@lifewallet.de
+            <a href="mailto:datenschutz@mywally.me" className="text-[var(--color-forest-700)] underline underline-offset-2 hover:text-[var(--color-forest)]">
+              datenschutz@mywally.me
             </a>
           </p>
         </section>
@@ -184,13 +184,13 @@ export default function DatenschutzPage() {
           <h2 className="mb-4 text-xl font-bold">9. Änderungen dieser Datenschutzerklärung</h2>
           <p className="leading-relaxed">
             Wir behalten uns vor, diese Datenschutzerklärung bei Bedarf anzupassen. Die jeweils aktuelle
-            Version ist stets auf unserer Website unter lifewallet.de/datenschutz abrufbar. Bei wesentlichen
+            Version ist stets auf unserer Website unter mywally.me/datenschutz abrufbar. Bei wesentlichen
             Änderungen informieren wir registrierte Nutzer per E-Mail.
           </p>
           <p className="mt-4 text-sm">
             Kontakt Datenschutz:{" "}
-            <a href="mailto:datenschutz@lifewallet.de" className="text-[var(--color-forest-700)] underline underline-offset-2 hover:text-[var(--color-forest)]">
-              datenschutz@lifewallet.de
+            <a href="mailto:datenschutz@mywally.me" className="text-[var(--color-forest-700)] underline underline-offset-2 hover:text-[var(--color-forest)]">
+              datenschutz@mywally.me
             </a>
           </p>
         </section>
@@ -199,7 +199,7 @@ export default function DatenschutzPage() {
       {/* Footer */}
       <footer className="border-t border-[var(--color-divider)] py-6">
         <div className="mx-auto max-w-[1440px] px-5 lg:px-10">
-          <p className="text-sm text-[var(--color-forest-700)]">© lifewallet GmbH · lifewallet.de · Stand: Juni 2026</p>
+          <p className="text-sm text-[var(--color-forest-700)]">© lifewallet GmbH · mywally.me · Stand: Juni 2026</p>
         </div>
       </footer>
     </div>
