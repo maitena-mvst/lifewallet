@@ -120,7 +120,7 @@ export default function SecuritySection() {
               <p className="text-base font-medium text-[#1a2d28]/90 lg:text-lg">Sicherheit</p>
             </div>
 
-            <h2 className="mt-4 max-w-[566px] text-[24px] font-semibold leading-8 text-[#1a2d28] lg:text-[30px] lg:leading-9">
+            <h2 className="mt-4 max-w-[566px] text-[24px] font-bold leading-8 text-[#1a2d28] lg:text-[30px] lg:leading-9">
               Deine Daten verdienen höchstes Vertrauen
             </h2>
 

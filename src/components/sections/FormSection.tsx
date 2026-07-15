@@ -29,7 +29,7 @@ export default function FormSection() {
             </div>
 
             <div className="flex max-w-[320px] flex-col gap-4">
-              <h2 className="text-[24px] font-semibold leading-8 text-lime-900">
+              <h2 className="text-[24px] font-bold leading-8 text-lime-900">
                 {HEADLINE}
               </h2>
               <div className="flex flex-col gap-3 text-sm leading-5 text-lime-700">
@@ -66,7 +66,7 @@ export default function FormSection() {
                 <p className="text-lg font-medium text-lime-700">{LABEL}</p>
               </div>
 
-              <h2 className="mt-2 text-[30px] font-semibold leading-9 text-lime-900">
+              <h2 className="mt-2 text-[30px] font-bold leading-9 text-lime-900">
                 {HEADLINE}
               </h2>
 

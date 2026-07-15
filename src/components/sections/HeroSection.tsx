@@ -2,7 +2,6 @@ import Image from "next/image"
 import Navbar from "@/components/Navbar"
 import Button from "@/components/ui/Button"
 import PhoneShowcase from "@/components/hero/PhoneShowcase"
-import NotificationBadge from "@/components/hero/NotificationBadge"
 
 const LABEL_ICON = "/Me.svg?v=2"
 
@@ -60,10 +59,7 @@ export default function HeroSection() {
           <HeroText />
         </div>
         <div className="group absolute right-10 top-[185px] bottom-0 w-[56%] max-w-[780px]">
-          <PhoneShowcase badge={false} />
-          {/* Badge anchored 40px above the trust banner (which is pinned to the
-              viewport bottom and is 71px tall → 71 + 40 = 111px from the bottom). */}
-          <NotificationBadge className="right-[260px] bottom-[111px] w-[360px]" />
+          <PhoneShowcase badgeClassName="bottom-[13%] left-[-4%] w-[62%] max-w-[380px]" />
         </div>
       </div>
     </section>

@@ -20,7 +20,7 @@ export default function WaitingListBannerSection() {
           {/* Mobile (<lg): centered text on top, pattern fills the bottom */}
           <div className="lg:hidden">
             <div className="flex flex-col items-center px-6 pt-8 text-center">
-              <h2 className="text-[24px] font-semibold leading-8 text-lime-900">
+              <h2 className="text-[24px] font-bold leading-8 text-lime-900">
                 {HEADLINE}
               </h2>
               <p className="mt-2 text-sm leading-5 text-lime-700">{SUB}</p>
@@ -41,7 +41,7 @@ export default function WaitingListBannerSection() {
           {/* Desktop (lg+): text left (vertically centered), pattern right */}
           <div className="relative hidden h-[241px] lg:block">
             <div className="relative z-10 flex h-full max-w-[560px] flex-col justify-center pl-10">
-              <h2 className="text-[24px] font-semibold leading-8 text-lime-900">
+              <h2 className="text-[24px] font-bold leading-8 text-lime-900">
                 {HEADLINE}
               </h2>
               <p className="mt-2 text-base leading-6 text-lime-700">{SUB}</p>

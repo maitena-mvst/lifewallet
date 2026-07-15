@@ -9,7 +9,15 @@ const HERO_SCREENS = "/assets/home/01-hero/hero-screens.png"
 // Max tilt in degrees — kept small for a subtle, premium 3D feel.
 const MAX_TILT = 8
 
-export default function PhoneShowcase({ badge = true }: { badge?: boolean }) {
+export default function PhoneShowcase({
+  badge = true,
+  // Position is relative to the phone showcase box, so the badge always sits on
+  // the screens regardless of viewport height. Overridable per breakpoint.
+  badgeClassName = "bottom-[14%] left-[-7%] w-[78%] max-w-[360px]",
+}: {
+  badge?: boolean
+  badgeClassName?: string
+}) {
   const sceneRef = useRef<HTMLDivElement>(null)
   const stageRef = useRef<HTMLDivElement>(null)
 
@@ -53,10 +61,10 @@ export default function PhoneShowcase({ badge = true }: { badge?: boolean }) {
         />
       </div>
 
-      {/* Notification badge (mobile/in-flow showcase). Desktop renders its own,
-          banner-anchored, in HeroSection. Kept outside the 3D stage so it always
+      {/* Notification badge, anchored to the phone box so it stays glued to the
+          screens at any viewport height. Kept outside the 3D stage so it always
           paints in front. */}
-      {badge && <NotificationBadge className="bottom-[14%] left-[-7%] w-[78%] max-w-[360px]" />}
+      {badge && <NotificationBadge className={badgeClassName} />}
     </div>
   )
 }
