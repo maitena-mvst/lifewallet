@@ -14,10 +14,7 @@ const description =
 
 export const metadata: Metadata = {
   // Used to build absolute URLs for the OG/Twitter share images.
-  // TODO(url-session): switch to https://mywally.me once the custom domain is
-  // live. Deploy URL below still points at the current Vercel project — to be
-  // discussed / renamed in the separate URL-setup session.
-  metadataBase: new URL("https://lifewallet.vercel.app"),
+  metadataBase: new URL("https://mywally.me"),
   title: "mywally",
   description,
   openGraph: {
