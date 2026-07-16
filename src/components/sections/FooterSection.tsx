@@ -20,7 +20,7 @@ export default function FooterSection() {
         {/* Top row — logo + CTA */}
         <div className="flex flex-col gap-4 pt-6 lg:flex-row lg:items-center lg:justify-between lg:pt-6">
           <Image
-            src="/Logo.svg?v=3"
+            src="/Logo.svg?v=4"
             alt="mywally"
             width={191}
             height={35}
