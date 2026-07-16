@@ -35,15 +35,15 @@ export default function TeamSection() {
               <div className="relative h-[226px] w-[167px] overflow-hidden rounded-lg bg-[#f3f3f3] lg:h-[351px] lg:w-[268px] lg:rounded-xl">
                 <Image
                   src="/assets/home/10-team/founder-nicole.jpg"
-                  alt="Dr. Nicole Grigat"
+                  alt="Niki Grigat"
                   fill
                   className="object-cover object-top"
                   sizes="(max-width: 1024px) 167px, 268px"
                 />
               </div>
               <div>
-                <p className="text-xs font-medium text-[#1a2d28] lg:text-sm">Dr. Nicole Grigat</p>
-                <p className="text-xs text-[#1a2d28]/70">Fachanwältin</p>
+                <p className="text-xs font-medium text-[#1a2d28] lg:text-sm">Niki Grigat, LL.M.</p>
+                <p className="text-xs text-[#1a2d28]/70">Fachanwältin für Familienrecht und Fachanwältin für Steuerrecht</p>
               </div>
             </div>
 
@@ -51,15 +51,15 @@ export default function TeamSection() {
               <div className="relative h-[226px] w-[167px] overflow-hidden rounded-lg bg-[#f3f3f3] lg:h-[351px] lg:w-[268px] lg:rounded-xl">
                 <Image
                   src="/assets/home/10-team/founder-martina.png"
-                  alt="Dr. Martina Große Sundrup"
+                  alt="Dr. Med. Martina Große Sundrup"
                   fill
                   className="object-cover object-top [transform:scaleX(-1)]"
                   sizes="(max-width: 1024px) 167px, 268px"
                 />
               </div>
               <div>
-                <p className="text-xs font-medium text-[#1a2d28] lg:text-sm">Dr. Martina Große Sundrup</p>
-                <p className="text-xs text-[#1a2d28]/70">Fachärztin</p>
+                <p className="text-xs font-medium text-[#1a2d28] lg:text-sm">Dr. Med. Martina Große Sundrup</p>
+                <p className="text-xs text-[#1a2d28]/70">Fachärztin für Innere Medizin, Pneumologie und Schlafmedizin</p>
               </div>
             </div>
           </div>
