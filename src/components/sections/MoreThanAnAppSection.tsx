@@ -25,7 +25,7 @@ const PILLARS = [
   {
     id: "begleitet",
     title: "Wally begleitet im Ernstfall",
-    body: "Im Angel-Mode führt Wally Deine Familie Schritt für Schritt durch alles, was getan werden muss.",
+    body: "Im Todesfall führt Wally Deine Familie Schritt für Schritt durch alles, was getan werden muss.",
     icon: "angel",
   },
 ]

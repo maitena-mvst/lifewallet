@@ -1,6 +1,12 @@
 {
   "version": "0.0.1",
   "configurations": [
-    { "name": "lifewallet", "runtimeExecutable": "npm", "runtimeArgs": ["run", "dev"], "port": 3000, "autoPort": true }
+    {
+      "name": "lifewallet",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "/Users/maitena/Desktop/lifewallet", "run", "dev"],
+      "port": 3000,
+      "autoPort": true
+    }
   ]
 }
