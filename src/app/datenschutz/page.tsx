@@ -14,7 +14,7 @@ export default function DatenschutzPage() {
       <header className="border-b border-[var(--color-divider)]">
         <div className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-4 lg:px-10">
           <Link href="/">
-            <Image src="/Logo.svg?v=4" alt="mywally" width={150} height={28} className="h-[28px] w-auto" />
+            <Image src="/Logo.svg?v=5" alt="mywally" width={150} height={28} className="h-[28px] w-auto" />
           </Link>
           <Link href="/" className="text-sm text-[var(--color-forest-700)] hover:text-[var(--color-forest)] transition-colors">
             ← Zurück zur Startseite

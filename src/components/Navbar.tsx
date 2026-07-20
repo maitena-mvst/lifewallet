@@ -6,7 +6,7 @@ import Link from "next/link"
 import Button from "@/components/ui/Button"
 
 // ?v= busts stale browser caches when the SVG content changes
-const LOGO = "/Logo.svg?v=4"
+const LOGO = "/Logo.svg?v=5"
 
 const NAV_LINKS = [
   { label: "Warum mywally", href: "#03-the-problem" },

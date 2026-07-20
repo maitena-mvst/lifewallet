@@ -14,7 +14,7 @@ export default function ImpressumPage() {
       <header className="border-b border-[var(--color-divider)]">
         <div className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-4 lg:px-10">
           <Link href="/">
-            <Image src="/Logo.svg?v=4" alt="lifewallet" width={150} height={28} className="h-[28px] w-auto" />
+            <Image src="/Logo.svg?v=5" alt="lifewallet" width={150} height={28} className="h-[28px] w-auto" />
           </Link>
           <Link href="/" className="text-sm text-[var(--color-forest-700)] hover:text-[var(--color-forest)] transition-colors">
             ← Zurück zur Startseite
@@ -30,7 +30,7 @@ export default function ImpressumPage() {
 
         <section className="mb-8">
           <p className="font-semibold">LifeWallet GmbH</p>
-          <p>handelnd unter der Marke lifewallet</p>
+          <p>handelnd unter der Marke my wally</p>
           <p>Forstwaldstraße 17, 47804 Krefeld</p>
           <p>Deutschland</p>
         </section>
@@ -45,8 +45,8 @@ export default function ImpressumPage() {
           <h2 className="mb-3 text-lg font-semibold">Kontakt</h2>
           <p>
             E-Mail:{" "}
-            <a href="mailto:hallo@lifewallet.de" className="text-[var(--color-forest-700)] underline underline-offset-2 hover:text-[var(--color-forest)]">
-              hallo@lifewallet.de
+            <a href="mailto:hallo@mywally.me" className="text-[var(--color-forest-700)] underline underline-offset-2 hover:text-[var(--color-forest)]">
+              hallo@mywally.me
             </a>
           </p>
         </section>
@@ -68,7 +68,7 @@ export default function ImpressumPage() {
       {/* Footer */}
       <footer className="border-t border-[var(--color-divider)] py-6">
         <div className="mx-auto max-w-[1440px] px-5 lg:px-10">
-          <p className="text-sm text-[var(--color-forest-700)]">© lifewallet GmbH · lifewallet.de</p>
+          <p className="text-sm text-[var(--color-forest-700)]">© lifewallet GmbH · mywally.me</p>
         </div>
       </footer>
     </div>
