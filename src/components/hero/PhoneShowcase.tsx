@@ -4,7 +4,7 @@ import { useRef } from "react"
 import Image from "next/image"
 import NotificationBadge from "@/components/hero/NotificationBadge"
 
-const HERO_SCREENS = "/assets/home/01-hero/hero-screens.png"
+const HERO_SCREENS = "/assets/home/01-hero/hero-screens-v3.png"
 
 // Max tilt in degrees — kept small for a subtle, premium 3D feel.
 const MAX_TILT = 8
@@ -46,7 +46,7 @@ export default function PhoneShowcase({
       onMouseLeave={reset}
       className="group relative mx-auto w-full max-w-[380px] [perspective:1400px] sm:max-w-[480px] lg:ml-auto lg:mr-0 lg:max-w-[580px]"
     >
-      {/* The two app screens, composed and bottom-aligned (single retina export). */}
+      {/* The two app screens (single transparent retina export). */}
       <div
         ref={stageRef}
         className="relative transition-transform duration-300 ease-out [transform-style:preserve-3d] motion-reduce:!transform-none"
@@ -54,8 +54,8 @@ export default function PhoneShowcase({
         <Image
           src={HERO_SCREENS}
           alt="mywally App – Startbildschirm mit Wally und die Wallet-Übersicht"
-          width={561}
-          height={694}
+          width={1121}
+          height={1387}
           priority
           className="h-auto w-full drop-shadow-[0_30px_55px_rgba(27,49,43,0.22)]"
         />

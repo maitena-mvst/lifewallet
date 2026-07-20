@@ -58,8 +58,8 @@ export default function HeroSection() {
         <div className="absolute top-1/2 left-10 max-w-[600px] -translate-y-[58%]">
           <HeroText />
         </div>
-        <div className="group absolute right-10 top-[185px] bottom-0 w-[56%] max-w-[780px]">
-          <PhoneShowcase badgeClassName="bottom-[13%] left-[-4%] w-[62%] max-w-[380px]" />
+        <div className="absolute right-10 top-[185px] bottom-0 w-[56%] max-w-[780px]">
+          <PhoneShowcase badgeClassName="bottom-[36%] left-[-29.83%] w-[62%] max-w-[380px]" />
         </div>
       </div>
     </section>
