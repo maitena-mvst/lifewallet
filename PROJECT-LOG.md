@@ -5,12 +5,10 @@ The homepage is composed of 12 sections (`src/components/sections/`), built one 
 
 ---
 
-## Waitlist migration to rapidmail (double opt-in) · 2026-07-22
+## Waitlist migration to rapidmail (double opt-in) · 2026-07-22, shipped 2026-07-23
 
-**Status: code implemented on branch `waitlist-rapidmail`.** Not yet merged/deployed — the
-live path on `main` stays Google Sheets until the rapidmail account, DNS (DKIM/SPF for
-`hallo@mywally.me`), DOI email/page, and Sheet-lead re-opt-in are all done in the rapidmail
-dashboard and the three env vars are set in Vercel. Supersedes "11 — Form" below.
+**Status: LIVE in production (2026-07-23).** Signups on mywally.me now go through rapidmail
+double opt-in; Google Sheets + Apps Script are retired. Supersedes "11 — Form" below.
 
 **Why:** need a confirmation email after signup (Google Sheets can't) + a regulatory
 requirement to use a **German provider**. Neon/Supabase/Resend were evaluated and rejected
@@ -24,20 +22,35 @@ requirement to use a **German provider**. Neon/Supabase/Resend were evaluated an
   server-only-secret pattern kept. rapidmail owns the DOI mail, confirm page, and consent log —
   **no** `/api/confirm`, `/bestaetigen`, or token logic was added.
 - `WaitlistForm` success copy → "Fast geschafft! Wir haben Dir eine E-Mail geschickt …" (DOI).
+- Signup moved into a **branded modal** (`src/components/waitlist/WaitlistProvider.tsx` +
+  `OpenWaitlistButton.tsx`, mounted in `layout.tsx`) opened by every CTA (hero, navbar, banner,
+  footer, section 11) instead of an inline field. Reuses `WaitlistForm` + the server-side route;
+  no third-party embed (kept the DSGVO/no-browser-exposure posture). We chose this over embedding
+  rapidmail's hosted popup.js specifically to avoid a client-side third-party script.
 - `datenschutz` §2.1/§3.2 rewritten: rapidmail (Freiburg) as sole Art. 28 processor, German
   servers, DOI + consent logging; waitlist US-transfer wording dropped (Vercel-US still applies
   to website hosting only). "Stand" bumped to Juli 2026.
 - Deleted `apps-script/waitlist.gs`.
 
-**Env (server-only, Vercel prod+preview+dev):** rapidmail API v3 auth is an **API user +
-password pair** (HTTP Basic), not a single bearer key — so `RAPIDMAIL_API_USERNAME`,
-`RAPIDMAIL_API_PASSWORD`, `RAPIDMAIL_RECIPIENTLIST_ID`. Removed `WAITLIST_WEBHOOK_URL/SECRET`.
+**Env (server-only):** rapidmail API v3 auth is an **API user + password pair** (HTTP Basic),
+not a single bearer key — so `RAPIDMAIL_API_USERNAME`, `RAPIDMAIL_API_PASSWORD`,
+`RAPIDMAIL_RECIPIENTLIST_ID` (list `2590`). Set in Vercel **Production + Preview** only — the
+Development env can't hold "Sensitive" vars. Removed `WAITLIST_WEBHOOK_URL/SECRET`.
 
-**Still to do before deploy (client / dashboard, not code):** rapidmail account w/ API + signed
-DPA; recipient-list id; credentials into Vercel; DNS for DKIM/SPF; DOI email/page styled in
-rapidmail; migrate existing Sheet leads via a fresh double opt-in (import → activation mail →
-keep only reconfirmed). `vercel --prod` deploys from the working tree — no commit/deploy without
-an explicit go.
+**Dashboard setup (done, not code):** rapidmail account verified out of demo mode; sender
+`hallo@mywally.me` (GoDaddy) added + confirmed; `mywally.me` DKIM/SPF/DMARC all green; DOI email
++ confirm page branded in **Online-Formulare** (the form's sender must be `hallo@mywally.me`, not
+the account default `joshua@mvst.co`). Gotcha found: rapidmail's dashboard CSV import adds leads
+as `active` and canNOT send a DOI — so the API path is the only way to force a fresh opt-in.
+
+**Lead migration (2026-07-23):** the ~20 existing Sheet leads were re-opted-in via a one-off
+script (`scratchpad/migrate-waitlist.mjs`) that POSTs each to the rapidmail API as `status:new`
++ `send_activationmail=yes`, sending the branded DOI; only re-confirmers become `active`. Audit
+log written alongside the CSV. Internal test addresses excluded.
+
+**Retired:** `apps-script/waitlist.gs` (deleted); old Vercel webhook vars removed; Apps Script
+web-app deployment archived and the Google Sheet archived (CSV kept as the consent backup).
+`vercel --prod` deploys from the working tree — deploy only on an explicit go.
 
 ---
 
