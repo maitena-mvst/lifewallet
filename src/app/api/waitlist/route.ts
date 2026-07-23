@@ -1,14 +1,18 @@
 import { NextRequest, NextResponse } from "next/server"
 
 /**
- * Waiting-list capture (section 11). Forwards the lead to a Google Apps Script
- * web app, which appends it as a row to the bound Google Sheet. The webhook URL
- * is called server-side only (never exposed to the browser, no CORS). See
- * PROJECT-LOG "11 — Form" for the Apps Script setup.
+ * Waiting-list capture (section 11). Creates the lead as a recipient in rapidmail
+ * (German provider, DSGVO) via its API v3, with `send_activationmail=yes` so
+ * rapidmail sends the double-opt-in mail, hosts the confirm link, flips the
+ * recipient to confirmed and logs consent. The API is called server-side only
+ * (credentials never reach the browser, no CORS). See PROJECT-LOG "11 — Form".
  */
+const RAPIDMAIL_RECIPIENTS_URL =
+  "https://apiv3.emailsys.net/v1/recipients?send_activationmail=yes"
+
 export async function POST(req: NextRequest) {
   try {
-    const { email, name, website } = await req.json()
+    const { email, website } = await req.json()
 
     // Honeypot: real users never fill `website`. If it's set, it's a bot —
     // return success so the bot learns nothing, but don't record anything.
@@ -20,49 +24,51 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "A valid email is required" }, { status: 400 })
     }
 
-    const url = process.env.WAITLIST_WEBHOOK_URL
-    if (!url) {
-      // Surfaced clearly so a missing var is obvious while wiring up the sheet.
+    const username = process.env.RAPIDMAIL_API_USERNAME
+    const password = process.env.RAPIDMAIL_API_PASSWORD
+    const recipientlistId = process.env.RAPIDMAIL_RECIPIENTLIST_ID
+    if (!username || !password || !recipientlistId) {
+      // Surfaced clearly so a missing var is obvious while wiring up rapidmail.
       console.error(
-        "Waitlist API: WAITLIST_WEBHOOK_URL is not set — see PROJECT-LOG '11 — Form'"
+        "Waitlist API: RAPIDMAIL_API_USERNAME / RAPIDMAIL_API_PASSWORD / " +
+          "RAPIDMAIL_RECIPIENTLIST_ID must all be set — see PROJECT-LOG '11 — Form'"
       )
       return NextResponse.json({ error: "Service not configured" }, { status: 503 })
     }
 
-    const res = await fetch(url, {
+    // rapidmail API v3 auth is HTTP Basic with an API user + password pair.
+    const auth = Buffer.from(`${username}:${password}`).toString("base64")
+
+    const res = await fetch(RAPIDMAIL_RECIPIENTS_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      // Apps Script returns a 302 → googleusercontent redirect; fetch follows it.
-      // `secret` lets the script reject direct POSTs to its public /exec URL.
+      headers: {
+        Authorization: `Basic ${auth}`,
+        "Content-Type": "application/json",
+      },
+      // status "new" = unconfirmed; combined with send_activationmail=yes this
+      // starts rapidmail's double opt-in. recipientlist_id must be numeric.
       body: JSON.stringify({
+        recipientlist_id: Number(recipientlistId),
         email: email.trim(),
-        name: name ?? "",
-        secret: process.env.WAITLIST_WEBHOOK_SECRET ?? "",
+        status: "new",
       }),
     })
 
-    // Apps Script returns HTTP 200 even for its own errors (e.g. "doPost not
-    // found" HTML, or {error:"unauthorized"}). Confirm the body really says
-    // success — otherwise the form would falsely report success while the lead
-    // is silently dropped.
+    // rapidmail returns 201 Created on success.
+    if (res.status === 201) {
+      return NextResponse.json({ success: true })
+    }
+
+    // Re-signup of an existing recipient (409 Conflict / "already exists") is not
+    // a failure from the user's point of view — they're already on the list, so
+    // don't surface an error. rapidmail won't re-send the DOI mail in that case.
     const text = await res.text()
-    let appended = false
-    try {
-      appended = res.ok && JSON.parse(text)?.success === true
-    } catch {
-      appended = false
+    if (res.status === 409 || /already\s*exist|bereits/i.test(text)) {
+      return NextResponse.json({ success: true })
     }
 
-    if (!appended) {
-      console.error(
-        "Waitlist API: webhook did not confirm success",
-        res.status,
-        text.slice(0, 200)
-      )
-      return NextResponse.json({ error: "Upstream error" }, { status: 502 })
-    }
-
-    return NextResponse.json({ success: true })
+    console.error("Waitlist API: rapidmail did not confirm success", res.status, text.slice(0, 200))
+    return NextResponse.json({ error: "Upstream error" }, { status: 502 })
   } catch (err) {
     console.error("Waitlist API error:", err)
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })

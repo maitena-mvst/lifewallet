@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Navbar from "@/components/Navbar"
 import Button from "@/components/ui/Button"
+import OpenWaitlistButton from "@/components/waitlist/OpenWaitlistButton"
 import PhoneShowcase from "@/components/hero/PhoneShowcase"
 
 const LABEL_ICON = "/Me.svg?v=2"
@@ -27,7 +28,7 @@ function HeroText() {
       </p>
 
       <div className="mt-2 flex flex-col items-center gap-4 sm:flex-row">
-        <Button href="#11-form">Frühen Zugang sichern</Button>
+        <OpenWaitlistButton source="hero">Frühen Zugang sichern</OpenWaitlistButton>
         <span className="hidden sm:inline-flex">
           <Button href="#05-process" variant="secondary">
             Wie funktioniert’s

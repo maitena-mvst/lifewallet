@@ -1,5 +1,5 @@
 import Image from "next/image"
-import WaitlistForm from "@/components/form/WaitlistForm"
+import OpenWaitlistButton from "@/components/waitlist/OpenWaitlistButton"
 
 const LABEL = "mywally bald ausprobieren"
 const HEADLINE = "Sei eine der ersten Personen, die Wally kennenlernt"
@@ -48,7 +48,9 @@ export default function FormSection() {
             />
 
             <div className="w-full">
-              <WaitlistForm variant="stack" />
+              <OpenWaitlistButton source="section-11" className="w-full">
+                Auf die Warteliste setzen
+              </OpenWaitlistButton>
             </div>
           </div>
 
@@ -75,8 +77,10 @@ export default function FormSection() {
                 <p>{BODY_2}</p>
               </div>
 
-              <div className="mt-8 max-w-[629px]">
-                <WaitlistForm variant="row" />
+              <div className="mt-8">
+                <OpenWaitlistButton source="section-11">
+                  Auf die Warteliste setzen
+                </OpenWaitlistButton>
               </div>
             </div>
 

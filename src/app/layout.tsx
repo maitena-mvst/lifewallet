@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Open_Sans } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
+import WaitlistProvider from "@/components/waitlist/WaitlistProvider"
 import "./globals.css"
 
 const openSans = Open_Sans({
@@ -39,7 +40,7 @@ export default function RootLayout({
   return (
     <html lang="de" className={openSans.variable}>
       <body className="antialiased">
-        {children}
+        <WaitlistProvider>{children}</WaitlistProvider>
         <Analytics />
       </body>
     </html>

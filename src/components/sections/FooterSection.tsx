@@ -1,5 +1,5 @@
 import Image from "next/image"
-import Button from "@/components/ui/Button"
+import OpenWaitlistButton from "@/components/waitlist/OpenWaitlistButton"
 
 const LEGAL_LINKS = [
   { href: "/impressum", label: "Impressum" },
@@ -26,9 +26,9 @@ export default function FooterSection() {
             height={35}
             className="h-[35px] w-auto"
           />
-          <Button href="#11-form" variant="primary" size="md" className="w-fit">
+          <OpenWaitlistButton source="footer" variant="primary" size="md" className="w-fit">
             Jetzt testen
-          </Button>
+          </OpenWaitlistButton>
         </div>
 
 

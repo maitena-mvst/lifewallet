@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import Button from "@/components/ui/Button"
+import OpenWaitlistButton from "@/components/waitlist/OpenWaitlistButton"
 
 // ?v= busts stale browser caches when the SVG content changes
 const LOGO = "/Logo.svg?v=5"
@@ -15,7 +15,7 @@ const NAV_LINKS = [
   { label: "Über uns", href: "#10-team" },
 ]
 
-const CTA = { label: "Frühen Zugang sichern", href: "#11-form" }
+const CTA = { label: "Frühen Zugang sichern" }
 
 const FOOTER_LINKS = [
   { label: "Impressum", href: "#" },
@@ -69,7 +69,7 @@ export default function Navbar() {
 
         {/* Desktop CTA */}
         <div className="hidden lg:block">
-          <Button href={CTA.href}>{CTA.label}</Button>
+          <OpenWaitlistButton source="nav">{CTA.label}</OpenWaitlistButton>
         </div>
 
         {/* Mobile burger */}
@@ -142,10 +142,10 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
         ))}
       </ul>
 
-      {/* CTA — links to the waiting-list form */}
-      <Button href={CTA.href} onClick={onClose} className="mt-10 w-full">
+      {/* CTA — opens the waiting-list modal (closes the menu first) */}
+      <OpenWaitlistButton source="nav-mobile" onClick={onClose} className="mt-10 w-full">
         {CTA.label}
-      </Button>
+      </OpenWaitlistButton>
 
       {/* Footer */}
       <div className="mt-auto border-t border-lime-300/25 pt-6">

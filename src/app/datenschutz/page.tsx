@@ -24,7 +24,7 @@ export default function DatenschutzPage() {
 
       {/* Content */}
       <main className="mx-auto max-w-[720px] px-5 py-12 lg:px-0 lg:py-20">
-        <p className="mb-2 text-sm text-[var(--color-forest-700)]">Stand: Juni 2026</p>
+        <p className="mb-2 text-sm text-[var(--color-forest-700)]">Stand: Juli 2026</p>
         <h1 className="mb-6 text-3xl font-bold lg:text-4xl">Datenschutzerklärung</h1>
 
         <p className="mb-10 leading-relaxed">
@@ -60,10 +60,13 @@ export default function DatenschutzPage() {
           <p className="mb-1 text-sm">Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO (Einwilligung)</p>
           <p className="mb-1 text-sm">Speicherdauer: Bis zur Abmeldung von der Warteliste oder auf Ihren Widerruf hin.</p>
           <p className="mb-6 text-sm">
-            Auftragsverarbeiter: Die Warteliste wird über Google Sheets verwaltet (Google Ireland
-            Ltd., Gordon House, Barrow Street, Dublin 4, Irland; eine Verarbeitung durch Google LLC,
-            USA, ist möglich). Es besteht ein Vertrag zur Auftragsverarbeitung gemäß Art. 28 DSGVO.
-            Zu Datenübermittlungen in Drittländer siehe Ziffer 3.2.
+            Auftragsverarbeiter: Die Warteliste wird ausschließlich über die rapidmail GmbH
+            (Augustinerplatz 2, 79098 Freiburg, Deutschland) verwaltet, mit der ein Vertrag zur
+            Auftragsverarbeitung gemäß Art. 28 DSGVO besteht. Die Daten werden auf Servern in
+            Deutschland gespeichert. Die Anmeldung erfolgt im Double-Opt-in-Verfahren: Nach dem
+            Eintragen erhalten Sie eine E-Mail mit einem Bestätigungslink; erst nach dessen
+            Bestätigung wird Ihre Anmeldung wirksam. rapidmail protokolliert dabei Ihre Einwilligung
+            (Zeitstempel und IP-Adresse) als Nachweis.
           </p>
 
           <h3 className="mb-3 text-base font-semibold">2.2 Nutzung der App</h3>
@@ -105,11 +108,13 @@ export default function DatenschutzPage() {
             gespeichert und verarbeitet.
           </p>
           <p className="mb-6 leading-relaxed">
-            Unsere Marketing-Website (einschließlich der Warteliste auf mywally.me) wird bei der
-            Vercel Inc. (USA) gehostet; die Verwaltung der Warteliste-Anmeldungen erfolgt über Google
-            Sheets. Dabei kann eine Übermittlung personenbezogener Daten (Ihrer E-Mail-Adresse) in die
-            USA stattfinden. Diese Übermittlung ist durch das EU-US Data Privacy Framework sowie durch
-            EU-Standardvertragsklauseln gemäß Art. 46 DSGVO abgesichert.
+            Unsere Marketing-Website mywally.me wird bei der Vercel Inc. (USA) gehostet; dabei kann
+            eine Übermittlung technischer Zugriffsdaten in die USA stattfinden, die durch das EU-US
+            Data Privacy Framework sowie EU-Standardvertragsklauseln gemäß Art. 46 DSGVO abgesichert
+            ist. Die Warteliste-Anmeldungen selbst (Ihre E-Mail-Adresse) werden hiervon getrennt
+            ausschließlich über unseren deutschen Dienstleister rapidmail (siehe Ziffer 2.1) auf
+            Servern in Deutschland verarbeitet; eine Übermittlung dieser Daten in die USA findet
+            nicht statt.
           </p>
 
           <h3 className="mb-3 text-base font-semibold">3.3 BSI-Standard</h3>
@@ -199,7 +204,7 @@ export default function DatenschutzPage() {
       {/* Footer */}
       <footer className="border-t border-[var(--color-divider)] py-6">
         <div className="mx-auto max-w-[1440px] px-5 lg:px-10">
-          <p className="text-sm text-[var(--color-forest-700)]">© lifewallet GmbH · mywally.me · Stand: Juni 2026</p>
+          <p className="text-sm text-[var(--color-forest-700)]">© lifewallet GmbH · mywally.me · Stand: Juli 2026</p>
         </div>
       </footer>
     </div>

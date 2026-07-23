@@ -5,6 +5,42 @@ The homepage is composed of 12 sections (`src/components/sections/`), built one 
 
 ---
 
+## Waitlist migration to rapidmail (double opt-in) · 2026-07-22
+
+**Status: code implemented on branch `waitlist-rapidmail`.** Not yet merged/deployed — the
+live path on `main` stays Google Sheets until the rapidmail account, DNS (DKIM/SPF for
+`hallo@mywally.me`), DOI email/page, and Sheet-lead re-opt-in are all done in the rapidmail
+dashboard and the three env vars are set in Vercel. Supersedes "11 — Form" below.
+
+**Why:** need a confirmation email after signup (Google Sheets can't) + a regulatory
+requirement to use a **German provider**. Neon/Supabase/Resend were evaluated and rejected
+(Neon/Supabase are databases that don't send mail; Resend is a US company).
+
+**What was built:**
+- `src/app/api/waitlist/route.ts` now calls rapidmail API v3 instead of the Apps Script
+  webhook: `POST https://apiv3.emailsys.net/v1/recipients?send_activationmail=yes`, HTTP Basic
+  auth, body `{ recipientlist_id, email, status: "new" }`. Success = HTTP **201**; an existing
+  recipient (409 / "already exists") is also treated as success. Honeypot + email validation +
+  server-only-secret pattern kept. rapidmail owns the DOI mail, confirm page, and consent log —
+  **no** `/api/confirm`, `/bestaetigen`, or token logic was added.
+- `WaitlistForm` success copy → "Fast geschafft! Wir haben Dir eine E-Mail geschickt …" (DOI).
+- `datenschutz` §2.1/§3.2 rewritten: rapidmail (Freiburg) as sole Art. 28 processor, German
+  servers, DOI + consent logging; waitlist US-transfer wording dropped (Vercel-US still applies
+  to website hosting only). "Stand" bumped to Juli 2026.
+- Deleted `apps-script/waitlist.gs`.
+
+**Env (server-only, Vercel prod+preview+dev):** rapidmail API v3 auth is an **API user +
+password pair** (HTTP Basic), not a single bearer key — so `RAPIDMAIL_API_USERNAME`,
+`RAPIDMAIL_API_PASSWORD`, `RAPIDMAIL_RECIPIENTLIST_ID`. Removed `WAITLIST_WEBHOOK_URL/SECRET`.
+
+**Still to do before deploy (client / dashboard, not code):** rapidmail account w/ API + signed
+DPA; recipient-list id; credentials into Vercel; DNS for DKIM/SPF; DOI email/page styled in
+rapidmail; migrate existing Sheet leads via a fresh double opt-in (import → activation mail →
+keep only reconfirmed). `vercel --prod` deploys from the working tree — no commit/deploy without
+an explicit go.
+
+---
+
 ## Favicon + social share image · 2026-06-19
 
 Added the favicon and Open Graph / Twitter share image via Next's App-Router file conventions

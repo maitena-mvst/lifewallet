@@ -28,9 +28,10 @@ function MailIcon() {
 }
 
 /**
- * The waiting-list capture form. Posts the email to /api/waitlist, which appends
- * it to the Google Sheet (see PROJECT-LOG "11 — Form"). Holds its own state, so it
- * can be dropped into both the desktop (row) and mobile (stack) layouts.
+ * The waiting-list capture form. Posts the email to /api/waitlist, which creates
+ * the lead in rapidmail and triggers a double-opt-in confirmation mail (see
+ * PROJECT-LOG "11 — Form"). Holds its own state, so it can be dropped into both
+ * the desktop (row) and mobile (stack) layouts.
  */
 export default function WaitlistForm({
   variant = "row",
@@ -100,7 +101,7 @@ export default function WaitlistForm({
         >
           <path d="m5 12 5 5L20 7" />
         </svg>
-        <span>Geschafft! Du stehst auf der Warteliste – wir melden uns per E-Mail.</span>
+        <span>Fast geschafft! Wir haben Dir eine E-Mail geschickt – bitte bestätige darin Deine Anmeldung zur Warteliste.</span>
       </div>
     )
   }

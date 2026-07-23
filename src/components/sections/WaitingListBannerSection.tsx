@@ -1,5 +1,5 @@
 import Image from "next/image"
-import Button from "@/components/ui/Button"
+import OpenWaitlistButton from "@/components/waitlist/OpenWaitlistButton"
 
 const HEADLINE = "Alles geregelt. Ab heute."
 const SUB = "Wally ist bereit – und freut sich auf Dich."
@@ -24,9 +24,9 @@ export default function WaitingListBannerSection() {
                 {HEADLINE}
               </h2>
               <p className="mt-2 text-sm leading-5 text-lime-700">{SUB}</p>
-              <Button href="#11-form" className="mt-6">
+              <OpenWaitlistButton source="banner" className="mt-6">
                 Auf die Warteliste
-              </Button>
+              </OpenWaitlistButton>
             </div>
             <Image
               src={PATTERN_MOBILE}
@@ -45,9 +45,9 @@ export default function WaitingListBannerSection() {
                 {HEADLINE}
               </h2>
               <p className="mt-2 text-base leading-6 text-lime-700">{SUB}</p>
-              <Button href="#11-form" className="mt-6 w-fit">
+              <OpenWaitlistButton source="banner" className="mt-6 w-fit">
                 Auf die Warteliste
-              </Button>
+              </OpenWaitlistButton>
             </div>
             <Image
               src={PATTERN_DESKTOP}
